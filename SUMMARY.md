@@ -112,50 +112,54 @@
 
   * [软考知识点](考研资料/软考知识点.md)
 
-* [Spring体系](spring-ti-xi-1/README.md)
+* [Spring体系](spring-ti-xi/README.md)
 
   * [Boot学习笔记](Spring体系/Boot学习笔记.md)
+
   * [Redis common pool报错](Spring体系/bug.md)
+
   * [SpringSecurity安全框架](Spring体系/springscurity.md)
 
-  * [Mybatis](spring-ti-xi-1/mybatis/README.md)
+  * [Mybatis](spring-ti-xi/mybatis/README.md)
     * [Mybatis-01](Spring体系/mybatis/mybatis-01.md)
-    * [Mybatis-02](spring-ti-xi-2/mybatis/mybatis-02.md)
-
-    * [Mybatis-3](spring-ti-xi-3/mybatis/mybatis-03.md)
-
-    * [MybatisPuls基本使用](spring-ti-xi-4/mybatis/mybatispuls-ji-ben-shi-yong.md)
-
-    * [Mybatis课堂笔记](spring-ti-xi-5/mybatis/mybatis-ke-tang-bi-ji.md)
-
-  * [SSM整合](spring-ti-xi-6/ssm-zheng-he/README.md)
-    * [SSM整合配置文件](spring-ti-xi-6/ssm-zheng-he/ssm-zheng-he-pei-zhi-wen-jian.md)
     
-    * [SSM框架整合](spring-ti-xi-7/ssm-zheng-he/ssm-kuang-jia-zheng-he.md)
+    * [Mybatis-02](Spring体系/mybatis/mybatis-02.md)
+
+    * [Mybatis-3](Spring体系/mybatis/mybatis-03.md)
+
+    * [MybatisPuls基本使用](Spring体系/mybatis/mybatispuls-ji-ben-shi-yong.md)
+
+    * [Mybatis课堂笔记](Spring体系/mybatis/mybatis-ke-tang-bi-ji.md)
+
+  * [SSM整合](spring-ti-xi/ssm-zheng-he/README.md)
+    * [SSM整合配置文件](Spring体系/ssm-zheng-he/ssm-zheng-he-pei-zhi-wen-jian.md)
     
-    * [Spring学习笔记](spring-ti-xi-8/ssm-zheng-he/spring-xue-xi-bi-ji.md)
+    * [SSM框架整合](Spring体系/ssm-zheng-he/ssm-kuang-jia-zheng-he.md)
     
-  * [SpringBoot参考文档](spring-ti-xi-9/springboot-can-kao-wen-dang/README.md)
+    * [Spring学习笔记](Spring体系/ssm-zheng-he/spring-xue-xi-bi-ji.md)
+    
+  * [SpringBoot参考文档](spring-ti-xi/springboot-can-kao-wen-dang/README.md)
     * [Martin Flower微服务](spring-ti-xi-9/springboot-can-kao-wen-dang/martin-flower-wei-fu-wu.md)
 
-  * [SpringBoot笔记](spring-ti-xi-10/springboot-bi-ji/README.md)
-    * [Boot技术参考文档](spring-ti-xi-10/springboot-bi-ji/boot-ji-shu-can-kao-wen-dang.md)
+  * [SpringBoot笔记](spring-ti-xi/springboot-bi-ji/README.md)
+    * [Boot技术参考文档](Spring体系/springboot-bi-ji/boot-ji-shu-can-kao-wen-dang.md)
     
-    * [SpringBoot整合Log4j2](spring-ti-xi-11/springboot-bi-ji/springboot-zheng-he-log4j2.md)
+    * [SpringBoot整合Log4j2](Spring体系/springboot-bi-ji/springboot-zheng-he-log4j2.md)
     
-    * [SpringBoot整合MybatisPlus逆向工程](spring-ti-xi-12/springboot-bi-ji/springboot-zheng-he-mybatisplus-ni-xiang-gong-cheng.md)
+    * [SpringBoot整合MybatisPlus逆向工程](Spring体系/springboot-bi-ji/springboot-zheng-he-mybatisplus-ni-xiang-gong-cheng.md)
     
-    * [SpringBoot配置项说明](spring-ti-xi-13/springboot-bi-ji/springboot-pei-zhi-xiang-shuo-ming.md)
+    * [SpringBoot配置项说明](Spring体系/springboot-bi-ji/springboot-pei-zhi-xiang-shuo-ming.md)
 
-* [理论概念](li-lun-gai-nian-4/README.md)
+* [理论概念](li-lun-gai-nian/README.md)
 
-  * [考试复习](li-lun-gai-nian-4/kao-shi-fu-xi/README.md)
+  * [考试复习](li-lun-gai-nian/kao-shi-fu-xi/README.md)
     * [操作系统复习课笔记](理论概念/考试复习/操作系统复习课笔记.md)
     
     * [软考知识点](理论概念/考试复习/软考知识点.md)
 
-  * [长期记录型](li-lun-gai-nian-6/chang-qi-ji-lu-xing/README.md)
+  * [长期记录型](li-lun-gai-nian/chang-qi-ji-lu-xing/README.md)
     * [Java刷题笔记](理论概念/长期记录型/Java刷题笔记.md)
 
     * [学习日记](理论概念/长期记录型/学习日记.md)
+
     * [算法刷题笔记](理论概念/长期记录型/算法刷题笔记.md)
