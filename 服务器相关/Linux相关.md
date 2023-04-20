@@ -1,4 +1,6 @@
-# #虚拟机信息
+# Linux相关
+
+## #虚拟机信息
 
 虚拟机默认配置
 
@@ -6,7 +8,7 @@ root用户密码root
 
 hadoop用户密码Raisei287517
 
-虚拟机IP: 192.168.126.3 
+虚拟机IP: 192.168.126.3
 
 子网IP：192.168.126.2(虚拟机ifconfig中网卡en233的IPADD地址)
 
@@ -16,57 +18,54 @@ DNS1：119.29.29.29
 
 宿主机IP:10.100.29.22
 
-passwd user_name修改用户密码
+passwd user\_name修改用户密码
 
 状态：
 
-- IP配置完毕
-- JDK安装，SSH安装完毕
-- hadoop安装在/usr/local/hadoop
-- jdk安装在/usr/lib/jvm/
+* IP配置完毕
+* JDK安装，SSH安装完毕
+* hadoop安装在/usr/local/hadoop
+* jdk安装在/usr/lib/jvm/
 
+## JDK内存分配参数
 
-# JDK内存分配参数
+\-vmargs -Xms128M -Xmx512M -XX:PermSize=64M -XX:MaxPermSize=128M
 
--vmargs -Xms128M -Xmx512M -XX:PermSize=64M -XX:MaxPermSize=128M
+```
+-vmargs 说明后面是VM的参数，所以后面的其实都是JVM的参数了
+-Xms128m JVM初始分配的堆内存
+-Xmx512m JVM最大允许分配的堆内存，按需分配
+-XX:PermSize=64M JVM初始分配的非堆内存
+-XX:MaxPermSize=128M JVM最大允许分配的非堆内存，按需分配
+```
 
-	-vmargs 说明后面是VM的参数，所以后面的其实都是JVM的参数了
-	-Xms128m JVM初始分配的堆内存
-	-Xmx512m JVM最大允许分配的堆内存，按需分配
-	-XX:PermSize=64M JVM初始分配的非堆内存
-	-XX:MaxPermSize=128M JVM最大允许分配的非堆内存，按需分配
+## Linux文件 profile、bashrc、bash\_profile区别
 
-# Linux文件 profile、bashrc、bash_profile区别
-
-
--   首先读入全局环境变量设定档`**/etc/profile**`，然后根据其内容读取额外的设定的文档，如`**/etc/profile.d**`和`**/etc/inputrc**`；
--   根据不同使用者帐号，于其家目录内读取`**~/.bash_profile**`；
--   读取失败则会读取`**~/.bash_login**`；
--   再次失败则读取`**~/.profile**`（这三个文档设定基本上无差别，仅读取上有优先关系）；
--   最后，根据用户帐号读取`**~/.bashrc**`。
+* 首先读入全局环境变量设定档`**/etc/profile**`，然后根据其内容读取额外的设定的文档，如`**/etc/profile.d**`和`**/etc/inputrc**`；
+* 根据不同使用者帐号，于其家目录内读取`**~/.bash_profile**`；
+* 读取失败则会读取`**~/.bash_login**`；
+* 再次失败则读取`**~/.profile**`（这三个文档设定基本上无差别，仅读取上有优先关系）；
+* 最后，根据用户帐号读取`**~/.bashrc**`。
 
 至于`**~/.profile**`与`**~/.bashrc**`都具有个性化定制功能，但`**~/.profile**`可以设定本用户专有的路径、环境变量等，它只能登入的时候执行一次。
 
 `**~/.bashrc**`也是某用户专有设定文档，可以设定路径、命令别名，每次 shell script 的执行都会使用它一次。
 
-### 差异总结
-`**/etc/profile**`，`**/etc/bashrc**` 是系统全局环境变量设定；
+#### 差异总结
+
+`**/etc/profile**`，`**/etc/bashrc**` 是系统全局环境变量设定；
 
 `**~/.profile**`，`**~/.bashrc**`用户家目录下的私有环境变量设定。
 
-# Hadoop前提条件
+## Hadoop前提条件
 
 VMware Pro16+Centos8
 
-## 1、修改用户root权限
+### 1、修改用户root权限
 
 1、切换到root用户权限
 
-Last login: Tue Sep 24 20:50:51 2013 from 192.168.30.171
-[user@Compile ~]$ su root
-password：
-[root@Compile user]#
- 2、查看/etc/sudoers文件权限，如果只读权限，修改为可写权限
+Last login: Tue Sep 24 20:50:51 2013 from 192.168.30.171 \[user@Compile \~]$ su root password： \[root@Compile user]# 2、查看/etc/sudoers文件权限，如果只读权限，修改为可写权限
 
 ```shell
 [root@Compile user]# ls -l /etc/sudoers
@@ -77,62 +76,43 @@ password：
 [root@Compile user]#
 ```
 
-​    3、执行vi命令，编辑/etc/sudoers文件，添加要提升权限的用户；在文件中找到root  ALL=(ALL) ALL，在该行下添加提升权限的用户信息，如：
+​ 3、执行vi命令，编辑/etc/sudoers文件，添加要提升权限的用户；在文件中找到root ALL=(ALL) ALL，在该行下添加提升权限的用户信息，如：
 
-root    ALL=(ALL)       ALL
-user    ALL=(ALL)       ALL
-说明：格式为（用户名    网络中的主机=（执行命令的目标用户）    执行的命令范围）
+root ALL=(ALL) ALL user ALL=(ALL) ALL 说明：格式为（用户名 网络中的主机=（执行命令的目标用户） 执行的命令范围）
 
-    4、保存退出，并恢复/etc/sudoers的访问权限为440
+```
+4、保存退出，并恢复/etc/sudoers的访问权限为440
+```
 
-[root@Compile user]# chmod 440 /etc/sudoers
-[root@Compile user]# ls -l /etc/sudoers
--r--r-----. 1 root root 4030 9月  25 00:57 /etc/sudoers
-[root@Compile user]#
-    5、切换到普通用户，测试用户权限提升功能
+\[root@Compile user]# chmod 440 /etc/sudoers \[root@Compile user]# ls -l /etc/sudoers -r--r-----. 1 root root 4030 9月 25 00:57 /etc/sudoers \[root@Compile user]# 5、切换到普通用户，测试用户权限提升功能
 
-
-
-## 2、两种JDK安装方式
+### 2、两种JDK安装方式
 
 **一、yum安装jdk**
 
 在linux上使用yum安装是非常粗暴无脑的，但仍然有需要注意的点，不然会掉坑里。这里说一下步骤。
 
-1、检查是否已安装JDK及卸载
-以下命令二选一，中括号选一即可
-**yum list installed | grep [java][jdk]**
-你也可以用rpm -qa | grep [java][jdk][gcj]
+1、检查是否已安装JDK及卸载 以下命令二选一，中括号选一即可 **yum list installed | grep \[java]\[jdk]** 你也可以用rpm -qa | grep \[java]\[jdk]\[gcj]
 
-卸载JAVA环境
-yum -y remove java-1.6.0-openjdk*  //表时卸载所有openjdk相关文件输入
-yum -y remove tzdata-java.noarch   //卸载tzdata-java
+卸载JAVA环境 yum -y remove java-1.6.0-openjdk\* //表时卸载所有openjdk相关文件输入 yum -y remove tzdata-java.noarch //卸载tzdata-java
 
 2、安装JDK
 
-执行命令**yum -y list java***查看可安装java版本。查看JDK软件包列表
-或者yum search java | grep -i --color jdk
+执行命令**yum -y list java**\*查看可安装java版本。查看JDK软件包列表 或者yum search java | grep -i --color jdk
 
-选择版本安装,这里我们希望安装java1.8，因为我们的机器是64位的，所以选择安装java-1.8.0-openjdk-devel.x86_64。
+选择版本安装,这里我们希望安装java1.8，因为我们的机器是64位的，所以选择安装java-1.8.0-openjdk-devel.x86\_64。
 
 这里有个地方要注意，要选择-devel的安装，因为这个安装的是jdk，而那个不带-devel的安装完了其实是jre。
 
-yum install -y java-1.8.0-openjdk-devel.x86_64
+yum install -y java-1.8.0-openjdk-devel.x86\_64
 
-或者如下命令，安装jdk1.8.0的所有文件(非常不建议这么做)
-yum install -y java-1.8.0-openjdk*
-
-
+或者如下命令，安装jdk1.8.0的所有文件(非常不建议这么做) yum install -y java-1.8.0-openjdk\*
 
 **实际会自动安装非常多个java文件夹，这是正常的情况**
 
+查看JDK是否安装成功 java -version
 
-
-查看JDK是否安装成功
-java -version
-
-3、配置环境变量
-yum安装JDK默认安装路径/usr/lib/jvm
+3、配置环境变量 yum安装JDK默认安装路径/usr/lib/jvm
 
 在/etc/profile文件添加如下命令
 
@@ -144,8 +124,7 @@ CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export JAVA_HOME  CLASSPATH  PATH 
 ```
 
-保存关闭profile文件，执行如下命令生效
-source  /etc/profile
+保存关闭profile文件，执行如下命令生效 source /etc/profile
 
 4、设置好后来检验一些
 
@@ -155,23 +134,15 @@ source  /etc/profile
 3. `$JAVA_HOME/bin/java -version # 与直接执行 java -version 一样`
 ```
 
-
-
 **二、从官网下载包安装jdk**
 
 如果你不喜欢yum安装的方式，想要使用官方提供的安装包进行传统方式的安装，可以使用如下步骤。
 
 1.执行命令useradd java，新建用户java
 
-
-
 2.执行命令passwd java，设置java用户密码
 
-
-
 3.进入oracle官网，java8下载页面http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html。
-
-
 
 大家也可以通过脚本之家的下载中选择相对应的版本
 
@@ -179,19 +150,11 @@ source  /etc/profile
 
 5.进入到/home/java目录下，输入wget +地址，即可开始下载
 
-
-
 6.等待下载成功
-
-
 
 7.查看文件，发现下载后的文件名有奇怪的后缀，重命名下载文件
 
-
-
 8.输入命令tar zxvf jdk-8u131-linux-x64.tar.gz解压安装包
-
-
 
 9.输入命令vi /etc/profile，打开环境变量配置文件
 
@@ -210,8 +173,6 @@ export CLASSPATH
 
 10.输入命令source /etc/profile，刷新环境变量配置文件使其立刻生效；输入java -version查看已安装的jdk版本
 
-
-
 你要以为这就完成了，那就掉坑里了。虽然大部分时候这就够了，但还有一步操作最好做一下。
 
 **建一个/usr/bin/java的java的超链接。**
@@ -224,49 +185,41 @@ ln -s /home/java/jdk1.8.0_131/bin/java /usr/bin/java
 
 至此，从官网下载包安装jdk完成。
 
-
-
-
-
 /usr/lib/python3.6/site-packages
 
+### 3、全局环境变量配置文件
 
+个人学习时可直接在/etc/profile配置JAVA\_HOME等变量,不必配置\~/profile
 
-## 3、全局环境变量配置文件
+* **/etc/profile**:所有用户默认的全局环境变量，**优先修改这个！**
+* **\~/profile**：在etc/profile的基础上定制覆盖
+* **/etc/.bashrc**:找不到存在？
+* **\~/.bashrc**：个体用户的bash局部变量，仅限与命令行使用？
 
-个人学习时可直接在/etc/profile配置JAVA_HOME等变量,不必配置~/profile
+### 4、Linux软件安装位置
 
-- **/etc/profile**:所有用户默认的全局环境变量，**优先修改这个！**
-- **~/profile**：在etc/profile的基础上定制覆盖
-- **/etc/.bashrc**:找不到存在？
-- **~/.bashrc**：个体用户的bash局部变量，仅限与命令行使用？
+* jdk通常安装位置\*\*/usr/lib/jvm/java-1.8.0\*\* /usr/java
+* hadoop安装位置 **/usr/local/hadoop**
+* **/etc**为全局配置文件存放处
+* **/usr/lib**下一般放gcc，jdk，python的运行环境，sdk文件一般都在这
 
-## 4、Linux软件安装位置
-
-- jdk通常安装位置**/usr/lib/jvm/java-1.8.0**	/usr/java 
-- hadoop安装位置 **/usr/local/hadoop**
-- **/etc**为全局配置文件存放处
-- **/usr/lib**下一般放gcc，jdk，python的运行环境，sdk文件一般都在这
-
-
-
-## 5、安装SSH、配置SSH无密码登陆
+### 5、安装SSH、配置SSH无密码登陆
 
 集群、单节点模式都需要用到 SSH 登陆（类似于远程登陆，你可以登录某台 Linux 主机，并且在上面运行命令），一般情况下，CentOS 默认已安装了 SSH client、SSH server，打开终端执行如下命令进行检验
 
 检查是否安装了SSH:
 
-​	`rpm -qa | grep ssh`
+​ `rpm -qa | grep ssh`
 
-若需要安装，则可以通过 yum 进行安装（安装过程中会让你输入 [y/N]，输入 y 即可）：
+若需要安装，则可以通过 yum 进行安装（安装过程中会让你输入 \[y/N]，输入 y 即可）：
 
-​	`sudo yum install openssh-clients`
+​ `sudo yum install openssh-clients`
 
-​	`sudo yum install openssh-server`
+​ `sudo yum install openssh-server`
 
 接着执行如下命令测试一下 SSH 是否可用：
 
-​	`ssh localhost`
+​ `ssh localhost`
 
 此时会有如下提示(SSH首次登陆提示)，输入 yes 。然后按提示输入密码 hadoop，这样就登陆到本机了。
 
@@ -280,13 +233,13 @@ ln -s /home/java/jdk1.8.0_131/bin/java /usr/bin/java
 4. `cat id_rsa.pub >> authorized_keys # 加入授权`
 5. `chmod 600 ./authorized_keys # 修改文件权限`
 
-~的含义
+\~的含义
 
-在 Linux 系统中，~ 代表的是用户的主文件夹，即 “/home/用户名” 这个目录，如你的用户名为 hadoop，则 ~ 就代表 “/home/hadoop/”。 此外，命令中的 # 后面的文字是注释。
+在 Linux 系统中，\~ 代表的是用户的主文件夹，即 “/home/用户名” 这个目录，如你的用户名为 hadoop，则 \~ 就代表 “/home/hadoop/”。 此外，命令中的 # 后面的文字是注释。
 
 此时再用 `ssh localhost` 命令，无需输入密码就可以直接登陆了
 
- **附录VMWare相关解决方案命令：**
+**附录VMWare相关解决方案命令：**
 
 开启ssh服务：`service sshd start/stop/restart`
 
@@ -294,7 +247,7 @@ SSH服务开机自动启动：chkconfig sshd on/off
 
 开启服务后，检查服务状态：service sshd status
 
- **修改/etc/ssh/ssh_config配置文件，！不报错就不要改！**
+**修改/etc/ssh/ssh\_config配置文件，！不报错就不要改！**
 
 ```shell
 Port 22 #运行端口
@@ -304,21 +257,19 @@ ListenAddress ::
 PasswordAuthentication yes #允许通过账号密码验证
 ```
 
- 开启  sshd  服务，输入 **sudo service sshd start**
+开启 sshd 服务，输入 **sudo service sshd start**
 
 ![img](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20161008124204950)
 
-检查  sshd  服务是否已经开启，输入**ps -e | grep sshd**
+检查 sshd 服务是否已经开启，输入**ps -e | grep sshd**
 
 ![img](https://img-blog.csdn.net/20161008124257998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
 
-或者输入**netstat -an | grep 22**  检查  **22** 号端口是否开启监听
+或者输入**netstat -an | grep 22** 检查 **22** 号端口是否开启监听
 
 ![img](https://img-blog.csdn.net/20161008124408719?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
 
-
-
-## 6、镜像源修改
+### 6、镜像源修改
 
 1.安装Centos后默认的yum源如下 /etc/yum.repos.d/
 
@@ -369,13 +320,9 @@ Cleaning up list of fastest mirrors
 [root@kangvcar ~]# yum list        //总共列出了9954个包
 ```
 
+## Linux基础命令
 
-
-
-
-# Linux基础命令
-
-## 1、查看linux版本
+### 1、查看linux版本
 
 一、查看Linux内核版本命令（两种方法）：
 
@@ -385,26 +332,26 @@ Cleaning up list of fastest mirrors
 
 二、查Linux系统版本的命令（3种方法）：
 
-1、lsb_release -a，即可列出所有版本信息：
+1、lsb\_release -a，即可列出所有版本信息：
 
 这个命令适用于所有的Linux发行版，包括RedHat、SUSE、Debian…等发行版。
 
 2、cat /etc/redhat-release，这种方法只适合Redhat系的Linux：
 
-[root@S-CentOS home]# cat /etc/redhat-release
+\[root@S-CentOS home]# cat /etc/redhat-release
 
 CentOS release 6.5 (Final)
 
 3、cat /etc/issue，此命令也适用于所有的Linux发行版。
 
-## 2、yum操作
+### 2、yum操作
 
-- 列出已安装软件 `yum list installed | grep []`
-- 卸载`yum -y remove java-1.6.0-openjdk*`  //表时卸载所有openjdk相关文件输入
-- 查询**`yum -y list java*`**查看可安装java*版本。
-- 查询JDK软件包列表`yum search java | grep -i --color jdk`
+* 列出已安装软件 `yum list installed | grep []`
+* 卸载`yum -y remove java-1.6.0-openjdk*` //表时卸载所有openjdk相关文件输入
+* 查询\*\*`yum -y list java*`\*\*查看可安装java\*版本。
+* 查询JDK软件包列表`yum search java | grep -i --color jdk`
 
-## 3、文件读写
+### 3、文件读写
 
 **文件的创建，查看，移动，删除**
 
@@ -416,7 +363,7 @@ echo 'chat' > file.py 写入
 
 echo'chat '>> file.py 追加写入
 
-cp file folder/  
+cp file folder/
 
 cp file filecopy
 
@@ -440,55 +387,46 @@ tar -zxvf 压缩文件名.tar-gz
 
 chmod 777 `filename`
 
+### 4、硬盘拓展
 
-
-## 4、硬盘拓展
-
-新添加的硬盘无法自动识别需要 
-fdisk /dev/sdb然后新建分区，写入
-结束后ls /dev/sd* 便可以查看到
+新添加的硬盘无法自动识别需要 fdisk /dev/sdb然后新建分区，写入 结束后ls /dev/sd\* 便可以查看到
 
 openwrt下的mkfs叫mke2fs
 
-#### linux下与存储相关的命令
+**linux下与存储相关的命令**
 
-| free	查看内存使用情况                                  |      |
-| --------------------------------------------------------- | ---- |
-| df	查看文件系统/挂载点的存储使用情况                   |      |
-| mkfs	对磁盘进行格式化                                  |      |
-| du	查看某个文件或者目录所占用的存储空间大小            |      |
-| fdisk	查看系统所有的磁盘和磁盘分区；对物理磁盘进行分区 |      |
+| free 查看内存使用情况                  |   |
+| ------------------------------ | - |
+| df 查看文件系统/挂载点的存储使用情况           |   |
+| mkfs 对磁盘进行格式化                  |   |
+| du 查看某个文件或者目录所占用的存储空间大小        |   |
+| fdisk 查看系统所有的磁盘和磁盘分区；对物理磁盘进行分区 |   |
 
-### 格式化分区
+#### 格式化分区
 
 `fdisk -l`
 
-<img src="https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20211015165225482.png" alt="image-20211015165225482" style="zoom: 67%;" />
+![image-20211015165225482](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20211015165225482.png)
 
 `fdisk /dev/sdb`
 
-<img src="https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20211015165236454.png" alt="image-20211015165236454" style="zoom:67%;" />
+![image-20211015165236454](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20211015165236454.png)
 
-### LVM简介
+#### LVM简介
 
 LVM全称Logical Volume Manager，逻辑卷管理，在linux系统下对磁盘分区进行管理的机制，是建立在物理磁盘上的抽象层。
 
-物理卷（pv，physical volume）
-可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似于windows下的C、D、E盘），但是和物理磁盘以及磁盘分区不同的是，物理卷含有和LVM相关的参数
+物理卷（pv，physical volume） 可以理解为linux下的物理磁盘或者磁盘分区，如/dev/sdb（磁盘）、/dev/sdb1（磁盘分区，通过fdisk对/dev/sdb进行操作划分出来的磁盘分区，类似于windows下的C、D、E盘），但是和物理磁盘以及磁盘分区不同的是，物理卷含有和LVM相关的参数
 
-卷组（vg，volume group）
-由一个或者多个物理卷组成的卷组
+卷组（vg，volume group） 由一个或者多个物理卷组成的卷组
 
-逻辑卷（lv，logical volume）
-通过卷组划分出来的分区，可以用来建立文件系统，例如/dev/mapper/centos-root 是根目录的文件系统挂载点，它就是建立在一个逻辑卷之上的，该文件系统的大小就是这个逻辑卷的大小
+逻辑卷（lv，logical volume） 通过卷组划分出来的分区，可以用来建立文件系统，例如/dev/mapper/centos-root 是根目录的文件系统挂载点，它就是建立在一个逻辑卷之上的，该文件系统的大小就是这个逻辑卷的大小
 
-物理块（PE，physical extent）
-每个物理卷被分为若干个物理块，是LVM寻址中的最小单元，有唯一编号，可以设置大小，默认为4MB
+物理块（PE，physical extent） 每个物理卷被分为若干个物理块，是LVM寻址中的最小单元，有唯一编号，可以设置大小，默认为4MB
 
-逻辑块（LE，logical extent）
-每个逻辑卷被分为若干个逻辑卷，与PE是一一对应的
+逻辑块（LE，logical extent） 每个逻辑卷被分为若干个逻辑卷，与PE是一一对应的
 
-### 案例：centos根目录扩容
+#### 案例：centos根目录扩容
 
 ```
 [root@slave01 ~]# df
@@ -617,7 +555,6 @@ I/O 大小(最小/最佳)：512 字节 / 512 字节
   Volume group "centos" successfully extended
 ```
 
-
 7.再次查看卷组，可以看到Free PE（空闲物理块）已经是265块
 
 ```
@@ -655,7 +592,7 @@ I/O 大小(最小/最佳)：512 字节 / 512 字节
 
 到此只是对逻辑卷进行了扩容，通过df还看不到根目录的空间扩充，还要对文件系统进行扩容才能完成
 
-9.通过 resize2fs 或者 xfs_growfs 命令对文件系统进行扩容
+9.通过 resize2fs 或者 xfs\_growfs 命令对文件系统进行扩容
 
 ```
 [root@slave01 ~]# resize2fs /dev/mapper/centos-root 
@@ -666,7 +603,7 @@ resize2fs: Bad magic number in super-block 当尝试打开 /dev/mapper/centos-ro
 
 这里有时候使用 resize2fs 会出错，查看一下根目录的文件系统
 
-查看*/dev/mapper/centos-root*文件系统
+查看\*/dev/mapper/centos-root\*文件系统
 
 ```
 [root@slave01 ~]# cat /etc/fstab | grep centos-root
@@ -702,10 +639,11 @@ tmpfs                    248428       0  248428    0% /run/user/0
 
 可以看到现在现在根目录 / 现在有24%的可用空间了
 
-## 5、前后台任务切换
+### 5、前后台任务切换
+
 前台运行：
 
-```text
+```
 $ bash run.sh           
 hello world
 hello world
@@ -715,7 +653,7 @@ hello world
 
 后台运行：
 
-```text
+```
 $ nohup bash  run.sh 2>&1 &                                                                     
 [1] 31520
 nohup: ignoring input and appending output to 'nohup.out'
@@ -731,13 +669,13 @@ hello world
 
 其中`31520`表示作业id。如果不加nohup, 当终端退出时，run.sh对应的进程会收到SIGHUP信号，而进程对SIGHUP信号的默认处理方式是终止，这显然不是我们想要的。而加上nohup之后，run.sh对应的进程会忽略SIGHUP信号，即终端退出并不影响进程继续运行.
 
-### 前台运行转后台
+#### 前台运行转后台
 
 很多情况下，我们并不知晓某个任务会运行多久，因此一般在前台运行该任务。如果发现该任务一时半会完成不了，能不能将它从前台运行转到后台？答案是可以，举例说明如何操作：
 
 首先在前台运行run.sh
 
-```text
+```
 $ bash run.sh 
 hello world
 hello world
@@ -746,29 +684,29 @@ hello world
 
 输入ctrl + z 将该前台任务挂起
 
-```text
+```
 ^Z
 [1]  + 32295 suspended  bash run.sh
 ```
 
 运行jobs命令，查看任务号(可以看到run.sh对应的任务号是1)
 
-```text
+```
 $ jobs                                                                                                  
 [1]  + suspended  bash run.sh
 ```
 
 运行bg命令，将任务从前台转到后台
 
-```text
+```
 bg %1
 ```
 
-### 后台运行转前台
+#### 后台运行转前台
 
 既然任务可以从前台转后台，那反过来从后台转前台是否可行呢？答案是可以的 首先以后台运行run.sh
 
-```text
+```
 $ nohup bash  run.sh 2>&1 & 
 [1] 482
 nohup: ignoring input and appending output to 'nohup.out'
@@ -776,62 +714,49 @@ nohup: ignoring input and appending output to 'nohup.out'
 
 查看后台任务
 
-```text
+```
 $ jobs
 [1]  + running    nohup bash run.sh 2>&1
 ```
 
 运行fg命令，将任务从后台转到前台
 
-```text
+```
 $ fg %1                    
 [1]  + 482 running    nohup bash run.sh 2>&1
 ```
 
+## 奇奇怪怪的BUG和tips
 
-
-
-# 奇奇怪怪的BUG和tips
-
-## ‌Termux小程序‌you-get 
+### ‌Termux小程序‌you-get
 
 安装you-get
 
-第一步：更新安装器
-pkg update && pkg upgrade
+第一步：更新安装器 pkg update && pkg upgrade
 
-第二步：获取sd卡读写权限
-termux-setup-storage
+第二步：获取sd卡读写权限 termux-setup-storage
 
-第三步：安装python和ffmpeg
-pkg install python ffmpeg
+第三步：安装python和ffmpeg pkg install python ffmpeg
 
-第四步：安装you-get
-pip install you-get
+第四步：安装you-get pip install you-get
 
-
-
-## apt-get: command not found
+### apt-get: command not found
 
 **1、第一种可能：**
 
 nfs客户端段显示命令不存在。主要是因为系统为最小化安装，一些命令没有安装导致，使用下面命令安装即可。
 
-yum install nfs-utils.x86_64
+yum install nfs-utils.x86\_64
 
 **2、第二种原因：**
 
 包管理器不是apt-get，只能是yum
 
+### 查找linux软件安装文件夹
 
+例如想知道redis安装在哪了, redis的服务端是"redis-server" 实验环境centos 7.6
 
-## 查找linux软件安装文件夹
-
-例如想知道redis安装在哪了, redis的服务端是"redis-server" 
-实验环境centos 7.6
-
-
-方法一:  locate 
+方法一: locate
 
 1.安装mlocate
 
@@ -847,58 +772,39 @@ locate redis-server
 
 /usr/local/bin/ 就是redis的安装位置
 
-方法二: whereis 只显示可执行文件
-whereis redis-server
+方法二: whereis 只显示可执行文件 whereis redis-server
 
-方法三: which只显示文件
-which redis-server
+方法三: which只显示文件 which redis-server
 
-方法四: find  文件和文件夹
-find / -name redis-server
+方法四: find 文件和文件夹 find / -name redis-server
 
-
-
-## Linux系统分类
+### Linux系统分类
 
 **一般来说linux系统基本上分两大类：**
 
-RedHat系列：Redhat、Centos、Fedora等
-Debian系列：Debian、Ubuntu等
+RedHat系列：Redhat、Centos、Fedora等 Debian系列：Debian、Ubuntu等
 
 **RedHat 系列**
 
-- 常见的安装包格式 rpm包,安装rpm包的命令是“rpm -参数”
-- 包管理工具 yum
-- 支持tar包
+* 常见的安装包格式 rpm包,安装rpm包的命令是“rpm -参数”
+* 包管理工具 yum
+* 支持tar包
 
 **Debian系列**
 
-- 常见的安装包格式 deb包,安装deb包的命令是“dpkg -参数”
-- 包管理工具 apt-get
-- 支持tar包
+* 常见的安装包格式 deb包,安装deb包的命令是“dpkg -参数”
+* 包管理工具 apt-get
+* 支持tar包
 
-*tar 只是一种压缩文件格式，它只是把文件压缩打包而已。 rpm 相当于windows中的安装文件，它会自动处理软件包之间的依赖关系。
-优缺点来说，rpm一般都是预先编译好的文件，它可能已经绑定到某种CPU或者发行版上面了。
-tar一般包括编译脚本，你可以在你的环境下编译，所以具有通用性。
-如果你的包不想开放源代码，你可以制作成rpm，如果开源，用tar更方便了。
-tar一般都是源码打包的软件，需要自己解包，然后进行安装三部曲，./configure, make, make install. 来安装软件。
-安装rpm包的命令是“rpm -参数”，安装deb包的命令是“dpkg -参数”。而linux系统很方便和人性化的一点就是很多软件或服务根本就不用我们去下载，直接使用相应的命令就可以管理了，可能这就是传说中的 “云”的概念。*
+_tar 只是一种压缩文件格式，它只是把文件压缩打包而已。 rpm 相当于windows中的安装文件，它会自动处理软件包之间的依赖关系。 优缺点来说，rpm一般都是预先编译好的文件，它可能已经绑定到某种CPU或者发行版上面了。 tar一般包括编译脚本，你可以在你的环境下编译，所以具有通用性。 如果你的包不想开放源代码，你可以制作成rpm，如果开源，用tar更方便了。 tar一般都是源码打包的软件，需要自己解包，然后进行安装三部曲，./configure, make, make install. 来安装软件。 安装rpm包的命令是“rpm -参数”，安装deb包的命令是“dpkg -参数”。而linux系统很方便和人性化的一点就是很多软件或服务根本就不用我们去下载，直接使用相应的命令就可以管理了，可能这就是传说中的 “云”的概念。_
 
-
-
-
-
-
-
-## wget命令行下载
+### wget命令行下载
 
 下载hadoop
 
 wget https://mirrors.cnnic.cn/apache/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz
 
-
-
-## curl命令
+### curl命令
 
 ```bash
 -A/--user-agent <string>              设置用户代理发送给服务器
@@ -924,10 +830,10 @@ bash <(curl -s -L https://git.io/v2ray-setup.sh --progress)
 curl -L -o /root/xray.sh https://cdn.jsdelivr.net/gh/Misaka-blog/Xray-script@master/xray.sh
 ```
 
-### 文件下载
+#### 文件下载
 
-- curl命令可以用来执行下载、发送各种HTTP请求，指定HTTP头部等操作
-- curl是将下载文件输出到stdout，将进度信息输出到stderr，不显示进度信息使用--silent选项。
+* curl命令可以用来执行下载、发送各种HTTP请求，指定HTTP头部等操作
+* curl是将下载文件输出到stdout，将进度信息输出到stderr，不显示进度信息使用--silent选项。
 
 `--progress`显示进度条
 
@@ -935,7 +841,7 @@ curl -L -o /root/xray.sh https://cdn.jsdelivr.net/gh/Misaka-blog/Xray-script@mas
 curl [网址]
 ```
 
-### 断点续传
+#### 断点续传
 
 ```shell
 > curl -O -u 'rumenz':'test' ftp://rumenz.com/jdk.tar.gz
@@ -949,11 +855,7 @@ curl [网址]
 
 > 注意断点续传的参数是`-C`, 要自动续传的话要使用 `-C -`, 否则需要手工指定断点的字节位置.
 
-
-
-## curl指定目录
-
-
+### curl指定目录
 
 我知道我可以使用以下2条命令来下载文件：
 
@@ -1034,9 +936,8 @@ curl --http1.1 http://example.com/somefile.zip --output directory/somefile.zip
 -O,  --output-document=FILE    write documents to FILE. (WGet)
 ```
 
+### 指定环境alternatives命令详解
 
-
-## 指定环境alternatives命令详解
 [指定环境alternatives命令详解](https://www.cnblogs.com/lpfuture/p/4638425.html)
 
 alternatives是Linux下的一个功能强大的命令。只能在root权限下执行。如系统中有几个命令功能十分类似，却又不能随意删除，那么可以用 alternatives 来指定一个全局的设置。
@@ -1063,14 +964,7 @@ common options: --verbose --test --help --usage --version
         --altdir <directory> --admindir <directory>
 ```
 
-说明：
-alternatives --install <link> <name> <path> <priority>
-其中，
-install表示安装
-link是符号链接
-name则是标识符
-path是执行文件的路径
-priority则表示优先级
+说明： alternatives --install 其中， install表示安装 link是符号链接 name则是标识符 path是执行文件的路径 priority则表示优先级
 
 例如：
 
@@ -1078,15 +972,11 @@ priority则表示优先级
 alternatives --config java
 ```
 
-
-
 问题现象
 
-## ###HADOOP无法通过ip访问服务页面
+### ###HADOOP无法通过ip访问服务页面
 
-**问题1：hdfs-site.xml配置项**
-通过jps命令查看java进程的状态，HADOOP相关的进程运行正常。
-jps是jdk提供的一个查看当前java进程的小工具， 可以看做是JavaVirtual Machine Process Status Tool的缩写。
+**问题1：hdfs-site.xml配置项** 通过jps命令查看java进程的状态，HADOOP相关的进程运行正常。 jps是jdk提供的一个查看当前java进程的小工具， 可以看做是JavaVirtual Machine Process Status Tool的缩写。
 
 ```
 [root@node4 ~]# jps
@@ -1126,7 +1016,7 @@ tcp6       0      0 :::8040                 :::*                    LISTEN      
 tcp6       0      0 :::8042                 :::*                    LISTEN      25556/java          
 ```
 
-修改HADOOP_HOME/etc/hadoop/hdfs-site.xml文件，加入
+修改HADOOP\_HOME/etc/hadoop/hdfs-site.xml文件，加入
 
 ```xml
 <property>
@@ -1164,10 +1054,9 @@ tcp6       0      0 :::8042                 :::*                    LISTEN      
 
 ```
 
-**问题2：selinux**
-按照道理应该可以访问50070端口了，但是仍然不行。再检查selinux，发现状态是enabled。
+**问题2：selinux** 按照道理应该可以访问50070端口了，但是仍然不行。再检查selinux，发现状态是enabled。
 
-- 查看SELINUX的状态
+* 查看SELINUX的状态
 
 ```shell
 [root@node4 ~]# /usr/sbin/sestatus -v
@@ -1205,8 +1094,7 @@ Controlling terminal:           unconfined_u:object_r:user_devpts_t:s0
 SELinux status:                 disabled
 ```
 
-**问题3：firewall（iptables端口开放）**
-关闭selinux之后，仍然无法访问页面，再查看iptables防火墙的设置。
+**问题3：firewall（iptables端口开放）** 关闭selinux之后，仍然无法访问页面，再查看iptables防火墙的设置。
 
 ```shell
 [root@node4 sbin]# firewall-cmd --state
@@ -1224,20 +1112,17 @@ success
 success
 ```
 
-处理结果
-页面可以访问了
+处理结果 页面可以访问了
 
+### 制作bin安装文件
 
+linux 下制作二进制 .bin 的文件 孤雁奉献 制做方法是使用cat 命令将执行脚本和打包文件同事放到一个.bin的文件里 这样安装的时候只要使用一个包，直接执行该包即可安装完毕，简单方便。
 
-## 制作bin安装文件
+例：制作安装apache、mysql的安装脚本包
 
-linux 下制作二进制 .bin 的文件        孤雁奉献 制做方法是使用cat 命令将执行脚本和打包文件同事放到一个.bin的文件里 这样安装的时候只要使用一个包，直接执行该包即可安装完毕，简单方便。
+1.将源码包先打包 # tar zcvf packages.tar.gz httpd-2.0.63.tar.bz2 mysql-5.0.33.tar.gz
 
- 例：制作安装apache、mysql的安装脚本包 
-
-1.将源码包先打包 # tar zcvf packages.tar.gz httpd-2.0.63.tar.bz2 mysql-5.0.33.tar.gz  
-
-2.编写脚本如下： 
+2.编写脚本如下：
 
 ```shell
 # cat install.sh 
@@ -1256,27 +1141,19 @@ make make install exit 0
 #cat install.sh packages.tar.gz >install.bin  
 ```
 
-这样就生成install.bin的安装文件，改文件是由shell脚本和二进制合成的。前半部分是脚本后半部分是二进制文件，用strings等二进制查看命令可以看到 最主要的是下面这句，是将二进制文件从.bin文件里分离出来 sed -n -e '1,/^exit 0$/!p' $0 > "${dir_tmp}/packages.tar.gz" 2>/dev/null  安装的时候直接执行 sh install.bin 安装这个方法可以将我们平时常使用的安装脚本化，然后打包。以后使用就方便了。
+这样就生成install.bin的安装文件，改文件是由shell脚本和二进制合成的。前半部分是脚本后半部分是二进制文件，用strings等二进制查看命令可以看到 最主要的是下面这句，是将二进制文件从.bin文件里分离出来 sed -n -e '1,/^exit 0$/!p' $0 > "${dir\_tmp}/packages.tar.gz" 2>/dev/null 安装的时候直接执行 sh install.bin 安装这个方法可以将我们平时常使用的安装脚本化，然后打包。以后使用就方便了。
 
-
-
-## hadoop启动报错
+### hadoop启动报错
 
 **node02: Warning: Permanently added ‘node02,192.168.139.129‘ (ECDSA) to the list of known hosts.**
 
 多半是yarn-site.xml文件有东西配错了
 
-
-
 第二种可能：
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20210406135053723.png)
-删除know_hosts文件，删除.ssh文件夹
-重新生成.ssh，并且重新启动hadoop
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20210406135053723.png) 删除know\_hosts文件，删除.ssh文件夹 重新生成.ssh，并且重新启动hadoop
 
-
-
-## DFSRouter: RECEIVED SIGNAL 15: SIGTERM
+### DFSRouter: RECEIVED SIGNAL 15: SIGTERM
 
 ERROR org.apache.hadoop.hdfs.server.namenode.NameNode: RECEIVED SIGNAL 15: SIGTERM
 
@@ -1292,11 +1169,9 @@ hadoop dfsadmin -refreshNodes
 
 问题总结：balancer停了一段时间了，以前balancer的 pid现在是router里的一个线程，所以stop balancer的时候，router退出了。
 
+### 拒绝连接
 
-
-## 拒绝连接
-
-java.io.IOException: java.net.ConnectException: Call From node01/192.168.100.10 to node01:10020 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+java.io.IOException: java.net.ConnectException: Call From node01/192.168.100.10 to node01:10020 failed on connection exception: java.net.ConnectException: Connection refused; For more details see: http://wiki.apache.org/hadoop/ConnectionRefused
 
 报错信息提示，在访问端口 100020的时候出错，这表示DataNode 需要访问 MapReduce JobHistory Server，而默认值是： 0.0.0.0:10020 。
 
@@ -1310,50 +1185,45 @@ jps 查看 ， 麻蛋 ，忘了打开，
 </property>
 ```
 
-` mr-jobhistory-daemon.sh start historyserver`
-
-
+`mr-jobhistory-daemon.sh start historyserver`
 
 **在执行一个Hadoop的文件读写任务是发生这个错误：Call From master/192.168.170.128 to master:8020 failed on connection exception: java.net.ConnectException: Connection。**
 
 意思大致是无法连接到master的8020端口。该问题造成的主要原因是和Hadoop以及Linux系统的版本有关，dfs.defaultFS的默认端口号为8020，但一般 在配置core-site.xml时大家都会配成9000（具体为什么我也不知道，网上只教怎么配，没说为什么），但是在Ubuntu系统中9000端口好像不起作用。将其重新改回8020即可。
 
-
-
-## tar打包
+### tar打包
 
 功能描述：打包与解打包命令：tar
 
 选项：
 
--c：打包；
+\-c：打包；
 
--x：解打包；
+\-x：解打包；
 
--f：指定压缩包的文件名。压缩包的扩展名是用来给管理员识别格式的，
+\-f：指定压缩包的文件名。压缩包的扩展名是用来给管理员识别格式的，
 
--v：显示打包文件过程；
+\-v：显示打包文件过程；
 
--C 目录：指定解打包位置；
+\-C 目录：指定解打包位置；
 
--z：压缩和解压缩 ".tar.gz"格式
+\-z：压缩和解压缩 ".tar.gz"格式
 
--P ：可以使用绝对路径来压缩
+\-P ：可以使用绝对路径来压缩
 
-tar zcfv Desktop.tar.gz Desktop/		打包
+tar zcfv Desktop.tar.gz Desktop/ 打包
 
-tar zxfv hadoop.tar.gz -C /usr/local		解压
+tar zxfv hadoop.tar.gz -C /usr/local 解压
 
+## #Centos8集群
 
-# #Centos8集群
+### 1、基本配置
 
-## 1、基本配置
+> **输入法配置**
 
->  **输入法配置**
+使用指令： yum install ibus-libpinyin 安装
 
-使用指令： yum install ibus-libpinyin 安装 
-
-​          reboot            安装好后重启
+​ reboot 安装好后重启
 
 设置==>语言，添加
 
@@ -1361,7 +1231,7 @@ tar zxfv hadoop.tar.gz -C /usr/local		解压
 
 `netstat -ntlp`查看网络端口
 
-**注意！！**控制面板VM适配器的IP地址，VM网络编辑器子网网关IP，虚拟机ifconfig的IP，全部**不能相同，但必需在同一网段下**
+**注意！！控制面板VM适配器的IP地址，VM网络编辑器子网网关IP，虚拟机ifconfig的IP，全部不能相同，但必需在同一网段下**
 
 1.使用dhclient生成IP地址，ifconfig查看，复制IP
 
@@ -1409,41 +1279,29 @@ DNS2=8.8.8.8
 
 测试：ifconfig查看IP地址，虚拟机ping宿主机10.100.29.22，宿主机ping虚拟机验证网络连通
 
-
-
-## 2、虚拟机网络连接不成功
+### 2、虚拟机网络连接不成功
 
 注意！！控制面板VM适配器的IP地址，VM网络编辑器子网网关IP，虚拟机ifconfig的IP，全部不能相同，但必需在同一网段下
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20181025170058654)
-接下来配置虚拟机：
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20181025190146298.png)
+![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20181025170058654) 接下来配置虚拟机： ![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20181025190146298.png)
 
-**注意！！控制面板VM适配器中的IP地址和VM虚拟网络编辑器网关IP是一致的!!实际虚拟机IP地址从外面看为2
+\*\*注意！！控制面板VM适配器中的IP地址和VM虚拟网络编辑器网关IP是一致的!!实际虚拟机IP地址从外面看为2
 
-所有网关都设置为同一个地址192.168.x.2
-**
+所有网关都设置为同一个地址192.168.x.2 \*\*
 
+### 3、修改主机名(永久)
 
+```
+此处本系统是redhat7.1, 修改本地主机名的文件是: /etc/hostname（版本不同，可能不同）
+```
 
-## 3、修改主机名(永久)
+​ 把里面的内容（原主机名）改为目标主机名即可
 
-  	此处本系统是redhat7.1, 修改本地主机名的文件是: /etc/hostname（版本不同，可能不同）
+​ 修改以后， 立即生效， 不用重启
 
-​     把里面的内容（原主机名）改为目标主机名即可
+### 4、防火墙
 
-​     修改以后， 立即生效， 不用重启
-
-
-
-## 4、防火墙
-
-firewalld 方式
-启动： systemctl start firewalld
-查看状态： systemctl status firewalld
-禁用，禁止开机启动： systemctl disable firewalld
-停止运行： systemctl stop firewalld
-重启：firewall-cmd --reload
+firewalld 方式 启动： systemctl start firewalld 查看状态： systemctl status firewalld 禁用，禁止开机启动： systemctl disable firewalld 停止运行： systemctl stop firewalld 重启：firewall-cmd --reload
 
 **遇到Unit iptables.service could not be found**：
 
@@ -1471,21 +1329,19 @@ service iptables stop
 service iptables start 
 ```
 
-
-
-## 5、SSH配置
+### 5、SSH配置
 
 `netstat -ntlp`查看网络端口
 
-1、  首先，要确保CentOS安装了  **openssh-server**，在终端中输入  **yum list installed | grep openssh-server**
+1、 首先，要确保CentOS安装了 **openssh-server**，在终端中输入 **yum list installed | grep openssh-server**
 
 ![image-20210925000542689](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20210925000542689.png)
 
-此处显示已经安装了  openssh-server，**如果又没任何输出显示表示没有安装**  openssh-server，
+此处显示已经安装了 openssh-server，**如果又没任何输出显示表示没有安装** openssh-server，
 
-通过输入  **`yum install openssh-server`**来进行安装**openssh-server**
+通过输入 **`yum install openssh-server`来进行安装openssh-server**
 
-2、  找到了  **/etc/ssh/**  目录下的sshd服务配置文件 **sshd_config**，用Vim编辑器打开
+2、 找到了 **/etc/ssh/** 目录下的sshd服务配置文件 **sshd\_config**，用Vim编辑器打开
 
 将文件中，关于监听端口、监听地址前的 # 号去除
 
@@ -1497,19 +1353,17 @@ ListenAddress ::
 PasswordAuthentication yes #允许通过账号密码验证
 ```
 
-3、  开启  sshd  服务，输入 **`sudo service sshd start`**
+3、 开启 sshd 服务，输入 **`sudo service sshd start`**
 
-检查  sshd  服务是否已经开启，输入**`ps -e | grep sshd`**
+检查 sshd 服务是否已经开启，输入\*\*`ps -e | grep sshd`\*\*
 
 ![image-20210925000823111](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20210925000823111.png)
 
-或者输入**`netstat -an | grep 22`**  检查  **22** 号端口是否开启监听
+或者输入\*\*`netstat -an | grep 22`\*\* 检查 **22** 号端口是否开启监听
 
 ![image-20210925000831948](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20210925000831948.png)
 
-
-
-## 集群搭建
+### 集群搭建
 
 **前提条件：基本配置，主机名，防火墙，SSH配置，JDK配置，hadoop安装配置，环境变量配置，镜像源修改**
 
@@ -1525,20 +1379,16 @@ PasswordAuthentication yes #允许通过账号密码验证
 
 3、配置slave虚拟机的IP地址，网关相同
 
-
-
-
-# phpStudy
+## phpStudy
 
 使用 SSH 连接工具 连接到您的 Linux服务器后，根据系统执行相应命令开始安装（大约2分钟完成面板安装）：
 
-Centos安装脚本 
+Centos安装脚本&#x20;
 
-`yum install -y wget `
-`wget -O install.sh https://download.xp.cn/install.sh`  
+`yum install -y wget wget -O install.sh https://download.xp.cn/install.sh`\
 `sh install.sh`
 
-### 安装后自动运行
+#### 安装后自动运行
 
 ```
 docker daemon running 
@@ -1566,5 +1416,4 @@ IP地址
 
 博客网站http://192.168.1.10/wordpress
 
-数据库http://192.168.1.10/phpMyAdmin_4.9.0.1/
-
+数据库http://192.168.1.10/phpMyAdmin\_4.9.0.1/
