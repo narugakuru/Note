@@ -37,23 +37,17 @@
   * [参考文档](Hadoop/爬虫.md)
 
 * [JavaWeb基础](javaweb-ji-chu/README.md)
+  
   * [JavaWeb](JavaWeb基础/JavaWeb.md)
-
-* [Spring体系](spring-ti-xi/README.md)
-
-  * [Boot学习笔记](Spring体系/Boot学习笔记.md)
-  * [Redis common pool报错](spring-ti-xi/bug.md)
-  * [SpringSecurity安全框架](spring-ti-xi/springscurity.md)
-
+  
 * [前端框架](qian-duan-kuang-jia/README.md)
 
   * [JQuery](前端框架/JQuery.md)
-
   * [JS不同点](前端框架/JS不同点.md)
+  
+* [服务器相关](fu-wu-qi-xiang-guan-1/README.md)
 
   * [11.23免费节点](服务器相关/11.23免费节点.md)
-
-* [服务器相关](fu-wu-qi-xiang-guan-1/README.md)
 
   * [Chilloutmix-colab](服务器相关/Chilloutmix-colab.md)
 
@@ -77,6 +71,7 @@
   * [基础概念](机器学习/基础概念.md)
 
 * [环境配置](huan-jing-pei-zhi/README.md)
+
   * [Anaconda](环境配置/Anaconda.md)
 
   * [Bat脚本](环境配置/Bat脚本.md)
@@ -102,6 +97,7 @@
   * [数据结构](理论概念/数据结构.md)
 
 * [考研资料](kao-yan-zi-liao/README.md)
+
   * [操作系统](考研资料/操作系统.md)
 
   * [数据库系统概论](考研资料/数据库系统概论.md)
@@ -117,8 +113,13 @@
   * [软考知识点](考研资料/软考知识点.md)
 
 * [Spring体系](spring-ti-xi-1/README.md)
+
+  * [Boot学习笔记](Spring体系/Boot学习笔记.md)
+  * [Redis common pool报错](Spring体系/bug.md)
+  * [SpringSecurity安全框架](Spring体系/springscurity.md)
+
   * [Mybatis](spring-ti-xi-1/mybatis/README.md)
-    * [Mybatis-01](spring-ti-xi-1/mybatis/mybatis-01.md)
+    * [Mybatis-01](Spring体系/mybatis/mybatis-01.md)
     * [Mybatis-02](spring-ti-xi-2/mybatis/mybatis-02.md)
 
     * [Mybatis-3](spring-ti-xi-3/mybatis/mybatis-03.md)
@@ -128,13 +129,12 @@
     * [Mybatis课堂笔记](spring-ti-xi-5/mybatis/mybatis-ke-tang-bi-ji.md)
 
   * [SSM整合](spring-ti-xi-6/ssm-zheng-he/README.md)
-    
     * [SSM整合配置文件](spring-ti-xi-6/ssm-zheng-he/ssm-zheng-he-pei-zhi-wen-jian.md)
     
     * [SSM框架整合](spring-ti-xi-7/ssm-zheng-he/ssm-kuang-jia-zheng-he.md)
     
     * [Spring学习笔记](spring-ti-xi-8/ssm-zheng-he/spring-xue-xi-bi-ji.md)
-
+    
   * [SpringBoot参考文档](spring-ti-xi-9/springboot-can-kao-wen-dang/README.md)
     * [Martin Flower微服务](spring-ti-xi-9/springboot-can-kao-wen-dang/martin-flower-wei-fu-wu.md)
 
@@ -148,6 +148,7 @@
     * [SpringBoot配置项说明](spring-ti-xi-13/springboot-bi-ji/springboot-pei-zhi-xiang-shuo-ming.md)
 
 * [理论概念](li-lun-gai-nian-4/README.md)
+
   * [考试复习](li-lun-gai-nian-4/kao-shi-fu-xi/README.md)
     * [操作系统复习课笔记](理论概念/考试复习/操作系统复习课笔记.md)
     
