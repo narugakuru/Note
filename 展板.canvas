@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"type":"text","text":"软路由\n拨号上网","id":"41e62184f5ef480b","x":-425,"y":799,"width":110,"height":60},
+		{"type":"text","text":"光猫桥接","id":"d0be3b39761f1030","x":-514,"y":674,"width":89,"height":60},
+		{"type":"text","text":"无线路由\n192.168.31.1","id":"413dfed431d70d7b","x":-291,"y":897,"width":126,"height":60}
+	],
+	"edges":[
+		{"id":"516161dd5b208714","fromNode":"d0be3b39761f1030","fromSide":"right","toNode":"41e62184f5ef480b","toSide":"left","label":"wan：192.168.31.2"},
+		{"id":"7600ab06c443d649","fromNode":"41e62184f5ef480b","fromSide":"right","toNode":"413dfed431d70d7b","toSide":"left","label":"lan：192.168.31.3"}
+	]
+}
