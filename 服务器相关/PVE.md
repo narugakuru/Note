@@ -4,6 +4,7 @@ tags:
   - 虚拟机
   - linux操作
 ---
+[PVE官方手册](https://pve-doc-cn.readthedocs.io/zh-cn/latest)
 
 [【NAS】PVE的简单使用教程、调优、常见问题汇总 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/614820460)
 
@@ -17,6 +18,15 @@ tags:
 
 [pve安装docker好去处，再谈lxc安装docker，顺带安装docker中文管理界面_软件应用_什么值得买 (smzdm.com)](https://post.smzdm.com/p/a30km0k5/)
 
+# 13.12 Proxmox VE端口列表
+
+- Web界面：8006
+- VNC控制台：5900-5999
+- SPICE proxy：3128
+- sshd（用于集群管理）：22
+- rpcbind：111
+- corosync多播（集群通信使用）：5404, 5405 UDP
+
 # 网络类型
 net2
 ```shell
@@ -27,7 +37,37 @@ External Port: 27827
 Press any key to continue
 ```
 
+# 获取公网IP6
 
+[Proxmox网桥通过SLAAC配置公网ipv6地址 - 海运的博客 (haiyun.me)](https://www.haiyun.me/archives/1416.html#comment-688)
+Proxmox安装后默认没有通过SLAAC配置公网ipv6地址，使用debian/ubuntu的方法配置ipv6提示错误不支持的方法auto。
+需要将accept_ra值改成2才能自动配置SLAAC ipv6地址：
+`nano /etc/sysctl.conf`
+
+`net.ipv6.conf.all.accept_ra=2`
+`net.ipv6.conf.default.accept_ra=2`
+`net.ipv6.conf.vmbr0.accept_ra=2`
+`net.ipv6.conf.all.autoconf=1`
+`net.ipv6.conf.default.autoconf=1`
+`net.ipv6.conf.vmbr0.autoconf=1`
+
+
+# PVETools
+方式一：命令行安装
+
+> 需要用root账号来运行
+
+在终端中按行分别执行以下内容：
+
+> 强烈建议先删除企业源：`rm /etc/apt/sources.list.d/pve-enterprise.list`
+
+```
+export LC_ALL=en_US.UTF-8
+apt update && apt -y install git && git clone https://github.com/ivanhao/pvetools.git\
+cd pvetools
+chmod +x ./*.sh
+./pvetools.sh
+```
 
 
 # 网络拓扑
@@ -61,7 +101,7 @@ ls -l /dev/disk/by-id/
 四、通过下面的命令将当个硬盘直通个虚拟机
 
 ```shell
-qm set 100 -sata3 /dev/disk/by-id/ata-TOSHIBA_MQ04ABF100_Y94ETIZ4T
+qm set 101 -sata3 /dev/disk/by-id/ata-TOSHIBA_MQ04ABF100_Y94ETIZ4T
 ```
 
 # LXC硬盘直通
@@ -89,6 +129,92 @@ mp=/home/jellyfin/media/st2： 这是要挂载到容器中的目录位置
 ```shell
 nano /etc/pve/lxc/id.conf
 mp1: /mnt/st2,mp=/home/jellyfin/media/st2
+```
+
+# 强制关闭虚拟机
+  在日常使用PVE搭建虚拟机的使用过程中，偶尔会出现虚拟机假死无法关闭的情况并提示TASK ERROR: VM quit/powerdown failed – got timeout显示关闭推出无反应超时，通过查找学习可以使用以下办法强制关闭假死的虚拟机。
+
+      1、选中右侧pve，点击左上方shell，打开ssh控制台，通过ps命令查到对应虚拟机的VM进程号。
+
+```
+ps -ef|grep "/usr/bin/kvm -id 102" |grep -v grep
+```
+
+# 换源
+
+```
+纯代码
+apt install apt-transport-https ca-certificates
+sed -i 's|^deb http://ftp.debian.org|deb https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list
+sed -i 's|^deb http://security.debian.org|deb https://mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list
+source /etc/os-release
+echo "deb https://mirrors.ustc.edu.cn/proxmox/debian/pve $VERSION_CODENAME pve-no-subscription" > /etc/apt/sources.list.d/pve-no-subscription.list
+apt update
+cp /usr/share/perl5/PVE/APLInfo.pm /usr/share/perl5/PVE/APLInfo.pm_back
+sed -i 's|http://download.proxmox.com|https://mirrors.ustc.edu.cn/proxmox|g' /usr/share/perl5/PVE/APLInfo.pm
+systemctl restart pvedaemon
+```
+
+[更换 PVE7 软件仓库源和 CT模板（LXC）源为国内源 | Frytea](https://www.frytea.com/archives/605/)
+
+## 替换 apt 软件源
+
+替换前建议先更新下证书，否则可能由于证书不可用导致 https 无法使用，进而无法下载所有软件。
+
+```bash
+$ sudo apt install apt-transport-https ca-certificates
+```
+
+首先替换通用软件源， Debian 的软件源配置文件是 `/etc/apt/sources.list`，备份后将其中内容修改为以下即可。
+
+```bash
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
+```
+
+之后替换 pve 软件源，pve 镜像默认的 pve 软件源配置文件是 `/etc/apt/sources.list.d/pve-enterprise.list` ，备份后将其中内容替换为以下即可：
+
+```bash
+deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian bullseye pve-no-subscription
+```
+
+最后更新下，速度很快：
+
+```bash
+sudo apt-get update
+```
+
+## 修改 **CT Templates (LXC容器)源**
+
+将 `/usr/share/perl5/PVE/APLInfo.pm` 文件中默认的源地址 `http://download.proxmox.com` 替换为 `https://mirrors.tuna.tsinghua.edu.cn/proxmox` 即可。
+
+可以使用如下命令修改：
+
+```bash
+cp /usr/share/perl5/PVE/APLInfo.pm /usr/share/perl5/PVE/APLInfo.pm_back
+sed -i 's|http://download.proxmox.com|https://mirrors.tuna.tsinghua.edu.cn/proxmox|g' /usr/share/perl5/PVE/APLInfo.pm
+```
+
+针对 `/usr/share/perl5/PVE/APLInfo.pm` 文件的修改，重启后生效。
+
+```bash
+systemctl restart pvedaemon.service
+```
+
+之后在 pve 网页端下载 CT Templates 速度就很快了。
+
+## 更新系统
+
+```
+apt install -y pve-kernel-6.2.6-1-pve pve-headers-6.2.6-1-pve pve-firmware
+
 ```
 
 # 启用硬件直通
@@ -138,66 +264,56 @@ qm importdisk 100 /var/lib/vz/template/iso/istoreos-21.02.3-2023042111-x86-64-sq
 qm importdisk 102 /var/lib/vz/template/iso/synoboot.img local-lvm
 ```
 
-# 强制关闭虚拟机
-  在日常使用PVE搭建虚拟机的使用过程中，偶尔会出现虚拟机假死无法关闭的情况并提示TASK ERROR: VM quit/powerdown failed – got timeout显示关闭推出无反应超时，通过查找学习可以使用以下办法强制关闭假死的虚拟机。
+# AC2100
 
-      1、选中右侧pve，点击左上方shell，打开ssh控制台，通过ps命令查到对应虚拟机的VM进程号。
-
-```
-ps -ef|grep "/usr/bin/kvm -id 102" |grep -v grep
-```
-
-# 换源
-
-[更换 PVE7 软件仓库源和 CT模板（LXC）源为国内源 | Frytea](https://www.frytea.com/archives/605/)
-
-替换 apt 软件源
-
-替换前建议先更新下证书，否则可能由于证书不可用导致 https 无法使用，进而无法下载所有软件。
-
-```cobol
-sudo apt install apt-transport-https ca-certificates
-```
-
-首先替换通用软件源， [Debian](https://so.csdn.net/so/search?q=Debian&spm=1001.2101.3001.7020) 的软件源配置文件是 `/etc/apt/sources.list`，备份后将其中内容修改为以下即可。
-
-```
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
- 
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
- 
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
- 
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
- 
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
- 
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
- 
-deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
- 
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
-
-```
-
-修改 CT Templates (LXC 容器) 源
-将 /usr/share/perl5/PVE/APLInfo.pm 文件中默认的源地址 http://download.proxmox.com 替换为 https://mirrors.tuna.tsinghua.edu.cn/proxmox 即可。
-
-可以使用如下命令修改：
-
-cp /usr/share/perl5/PVE/APLInfo.pm /usr/share/perl5/PVE/APLInfo.pm_back
- 
-sed -i 's|http://download.proxmox.com|https://mirrors.tuna.tsinghua.edu.cn/proxmox|g' /usr/share/perl5/PVE/APLInfo.pm
-
-针对 /usr/share/perl5/PVE/APLInfo.pm 文件的修改，重启后生效。
-
-systemctl restart pvedaemon.service
-
-之后在 pve 网页端下载 CT Templates 速度就很快了。
+![[attachments/31d53df3e3fbbbeaa29ba126d86bff48_MD5.png]]
 
 # samba
 
-/etc/samba
+## 1、安装samba服务
+
+```bash
+apt update && apt install samba -y
+```
+
+## 2、设置配置文件
+
+可以在/etc/samba/smb.conf末尾中添加
+
+```basic
+#添加一个iso共享库
+[toshiba]                                  //此处是路径，例如//10.13.14.2/iso
+   comment = toshiba             //描述
+   path =  /mnt/sata        //共享的文件夹
+   guest ok = no                       //不允许访客
+   browseable = no                     //不允许浏览
+   write list = root                   //运行root读写
+```
+
+懒人可以一键开启
+
+```bash
+cat >>/etc/samba/smb.conf <<EOF
+[toshiba]                                 
+   comment = this is a toshiba           
+   path =  /mnt   
+   guest ok = no                   
+   browseable = no                  
+   write list = root 
+EOF
+```
+
+## 3、添加用户
+
+```bash
+smbpasswd -a root
+```
+
+## 4、重启smb服务
+
+```bash
+systemctl restart smbd 
+```
 
 # LXC容器
 

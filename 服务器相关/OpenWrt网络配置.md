@@ -5,12 +5,53 @@ tags:
   - 计算机网络
 ---
 [[Linux相关]]
+
+欢乐
+志趣相投 物质 
+陪伴 稳定 体贴 帮助
+浪漫 性 
+繁衍后代
+
+# 机器IP
 - AC2100 
-	- 192.168.31.1 / 192.168.31.174
-- R66S 
+	- 192.168.31.1 / 192.168.31.179
+- openwrt
+	- 192.168.31.2
+- PVE
 	- 192.168.31.3
-- TB16P
+- ikuai
+	- 192.168.31.5
+- R7000P
 	- 192.168.31.4
+
+ETH0做为管理口，其他的网卡直通ikuai
+
+| 物理接口 | PVE标记 | PCI | PVE | OP | ikuai |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| ETH0 | enp1s0 | 01:00.0 | 接光猫 | 桥接wan、lan | 桥接lan |
+| ETH1 | enp2s0 | 02:00.0 | 直通ikuai |  |  |
+| ETH2 | eno1 | 03:00.0 | 直通ikuai |  |  |
+| ETH3 | enp4s0 | 04:00.0 | 管理口接AP |  | 直通拨号wan |
+# docker代理
+```
+vi /etc/systemd/system/multi-user.target.wants/docker.service
+
+然后在service下面加入代理的配置，比如：
+Environment=HTTP_PROXY=http://root:passwd@192.168.56.1:1080
+Environment=HTTPS_PROXY=http://root:passwd@192.168.56.1:1080
+Environment=NO_PROXY=localhost,127.0.0.1
+
+重启服务
+systemctl daemon-reload
+systemctl restart docker
+
+```
+
+# PVE配置记录
+
+### openwrt
+
+[X86 PVE 安装 | 易有云产品中心 (linkease.com)](https://doc.linkease.com/zh/guide/istoreos/install_pve.html)
 
 -   默认IP http://192.168.100.1
 -   默认密码：password
@@ -21,9 +62,17 @@ tags:
 
 [[学习,记录,骚操作] 在openwrt上搭建MC服务器 | yingye's Blog](https://blog.yingye.site/2021/04/26/%E5%9C%A8openwrt%E4%B8%8A%E6%90%AD%E5%BB%BAmc%E6%9C%8D%E5%8A%A1%E5%99%A8)
 
+### 网口对应PCI
+```
+root@pve:~/pvetools# lspci | grep -i 'eth'
+01:00.0 Ethernet controller: Intel Corporation Device 125c (rev 04)
+02:00.0 Ethernet controller: Intel Corporation Device 125c (rev 04)
+03:00.0 Ethernet controller: Intel Corporation Device 125c (rev 04)
+04:00.0 Ethernet controller: Intel Corporation Device 125c (rev 04)
+```
 
 
-# 系统代理
+### 系统代理
 ```
 vim /etc/profile
 http_proxy=http://192.168.31.18:7000
@@ -34,7 +83,7 @@ export https_proxy
 export ftp_proxy
 ```
 
-# 配置开机自启动  
+### 配置clash开机自启动  
 **1.创建service文件**  
 `touch /etc/systemd/system/clash.service`  
 **2.编辑service文件**  

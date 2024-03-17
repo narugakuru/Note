@@ -205,7 +205,7 @@ history.forward()
 
 ## 5、操作DOM对象
 
->核心
+> 核心
 
 浏览器网页即Dom树形结构
 
@@ -219,7 +219,7 @@ let children = fa.children;
 let firstChild = fa.firstChild;
 ```
 
->更新节点
+> 更新节点
 
 ```javascript
 //修改文本
@@ -247,7 +247,7 @@ father.removeChild(self);
 
 ## 6、操作表单（验证）
 
->表单是什么 form DOM 树
+> 表单是什么 form DOM 树
 
 - 文本框 text
 - 下拉框 select
@@ -266,10 +266,10 @@ father.removeChild(self);
 
 ## 7、JQuery
 
->```javascript
->//导入
-><script type="application/javascript" src="lib/jquery-3.6.0.min.js"></script>
->```
+> ```javascript
+> //导入
+> <script type="application/javascript" src="lib/jquery-3.6.0.min.js"> </script> 
+> ```
 
 
 

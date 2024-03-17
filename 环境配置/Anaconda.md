@@ -9,6 +9,23 @@ pip freeze > requirements.txt
 
 
 # 虚拟环境
+
+torch安装
+[download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
+
+
+### vit
+[【pytorch】Vision Transformer实现图像分类+可视化+训练数据保存_vision transformer训练自己的数据-CSDN博客](https://blog.csdn.net/weixin_51331359/article/details/124514770)
+
+[从零开始手把手搭建Vision Transformers(Pytorch版本) (qq.com)](https://mp.weixin.qq.com/s?__biz=MzU3ODk2Njc5Mg==&mid=2247492959&idx=1&sn=13a39fb0dbf826fe02b563c2ec71eafb&chksm=fd6fe138ca18682e13c3361f6d530e3d27ea4aeea73615940185188d7bc06905aee17020ae24&token=1443126529&lang=zh_CN#rd)
+
+
+```
+pip install lightning=2.1 对应torch2.1以下
+
+conda activate python=3.9 -y 
+```
+
 ### model
 ```python
 conda create --name model python=3.10 -y
