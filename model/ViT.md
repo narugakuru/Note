@@ -1,3 +1,9 @@
+---
+tags:
+  - model
+  - CV
+---
+
 [【pytorch】Vision Transformer实现图像分类+可视化+训练数据保存_vision transformer训练自己的数据-CSDN博客](https://blog.csdn.net/weixin_51331359/article/details/124514770)  
 
 [11.2 使用pytorch搭建Vision Transformer(vit)模型](https://www.bilibili.com/video/BV1AL411W7dT)
@@ -21,16 +27,24 @@ Vision Transformer在多个数据集上进行了测试，一共有三种模型�
 期待下一个改进版的Vision Transformer出现，成为一个简洁高效且通用的视觉骨干网络，无需标注信息。
 
 # VisionTransformer论文
+
 ## 结构
+
 ![[attachments/014684b083859720ae9ccc13101e4b87_MD5.png]]
 ![[attachments/000f96c28d79ca4bbf5957d4ca8eb7c2_MD5.png]]
+
 ### 预处理
+
 - image2embedding，将224x224图像分割成16x16个16x16的图像块patch，每个patch拉成一维向量做成embedding
 - 生成一个cls token（batch_size , 1 , model_dim），和embedding拼接维度1得到token_embedding。序列长度196+1，块的大小768（16x16x3）不变但序列长度可变，因此可以处理任意分辨率的图片（但会导致性能下降） 
 - 生成postion_embedding_table，取postion_embedding和token_embedding相加
+
 ### encoders
+
 然后送入encoder获得output，取output的cls token做一个mlp，得到分类结果
+
 ### self attention
+
 ![[attachments/5d13210100c61c70c3390ed73b6b4fd3_MD5.png]]
 Multi-head attention是通过mlp得到qkv，然后将dim均分给每个head
 每个head做attention计算最后concat再乘W
@@ -40,10 +54,15 @@ Multi-head attention是通过mlp得到qkv，然后将dim均分给每个head
 ![[attachments/ed83fbfb70432386f396511bd8c44b43_MD5.png]]
 
 ## 模型
+
 ### ViT-B/16
+
 ![[attachments/675cecff6a2581af88a786122642571a_MD5.png]]
+
 ### ViT-B/16 hybrid
+
 ![[attachments/3a6ae5f07318293cf642fb7f6d14399d_MD5.png]]
+
 ## 模型性能分析
 
 ![[attachments/1f84255766163d7b9e9e3e484c002319_MD5.png]]
@@ -53,8 +72,8 @@ Multi-head attention是通过mlp得到qkv，然后将dim均分给每个head
 
 ![[attachments/fafe22bd1c5fa908f567e7dcf008be69_MD5.png]]
 
-
 # 训练
+
 tensorboard --logdir=runs
 
 - 为什么训练n轮后再重新训练acc会从较低开始变回上次最终的训练结果？
@@ -65,10 +84,12 @@ tensorboard --logdir=runs
 - load的模型本身就是没有pre_logits.fc层的，所以不需要
 
 ## animals151
+
 - 50轮，训练精度0.6，验证0.3，产生严重过拟合
 - 150轮训练一晚上，精度0.3，0.15，也是过拟合，而且精度都很差
 
 ## pc_parts
+
 使用了pre-logits
 ![[attachments/485fea6b0d8e7a7c1dbbfce100bda612_MD5.png]]
 ![[attachments/ad5dad14e9fe385e2018df48abf57e31_MD5.png]]
@@ -84,6 +105,7 @@ tensorboard --logdir=runs
 完全没有用，可能得解冻底层网络才行
 
 ## ImageNet10
+
 图片大小不规律，得处理
 ```
 cfg = {  
@@ -106,7 +128,9 @@ cfg = {
     'device': 'cuda:0'  
 }
 ```
+
 ## ImageNet5
+
 删掉了一些不好处理的类，acc到0.4后不再提升
 使用差分学习率，最高0.58
 ![[attachments/878bbcf17784eca42fae6c025c2fe14b_MD5.png]]
@@ -180,12 +204,15 @@ cfg = {
    你可以使用Detectron2来下载和使用各种目标检测模型，如Faster R-CNN、Mask R-CNN等。
 
 这些库提供了方便的接口和方法来下载各种预训练模型，并且通常还包含了用于微调和推理的工具和示例代码。根据你的需求和使用场景，选择合适的库来下载和使用预训练模型。
+
 ## backbone
+
 在深度学习和计算机视觉中，"backbone"一词通常指的是用于特征提取的网络结构。它是大多数图像处理任务，如图像分类、目标检测、语义分割等，的基础组件。Backbone的目的是从输入图像中提取有用的特征，这些特征随后可以用于执行特定的任务，比如识别图像中的对象或理解场景的布局。
 
 Backbone通常是一种预先训练的深度神经网络，如ResNet、VGG、Inception、MobileNet等。这些网络在大型数据集（如ImageNet）上进行预训练，学会识别各种图像特征。通过迁移学习，研究人员和开发人员可以利用这些预训练的网络作为自己任务的起点，这样可以加速训练过程，提高模型的性能，尤其是当可用的训练数据相对较少时。
 
 在特定的深度学习任务中，backbone之后通常会接一些定制的层或结构来完成任务特定的目标，如分类头、检测头或分割头。这些结构利用backbone提取的特征来做出最终的预测或决策。
+
 ## 冻结权重方案
 
 1. 冻结除了head外的权重
@@ -316,6 +343,7 @@ Estimated Total Size (MB): 5554.32
 ```
 
 # torch的训练策略
+
 ### 1. 反向传播 (`loss.backward()`)
 
 当你调用`loss.backward()`时，PyTorch会自动计算所有参与计算并且`requires_grad=True`的张量（通常是模型参数）的梯度。这些梯度被存储在各自张量的`.grad`属性中。这意味着此时每个模型参数张量都已经获得了它的梯度，但这个梯度并没有被“显式”传递给优化器。

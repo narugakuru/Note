@@ -1,3 +1,8 @@
+---
+tags:
+  - Hadoop
+---
+
 # 启动集群
 
 启动hadoop hdfs & yarn 服务
@@ -10,6 +15,7 @@
 - jobHistory 19888
 
 # 运行wordcounts
+
 【目标】
 统计登录日志中各用户登录总次数
 

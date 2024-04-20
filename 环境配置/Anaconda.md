@@ -7,14 +7,13 @@ pip freeze > requirements.txt
 - tf tensorflow没有使用
 - yolo torch2.0+cu118和onnx
 
-
 # 虚拟环境
 
 torch安装
 [download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
 
-
 ### vit
+
 [【pytorch】Vision Transformer实现图像分类+可视化+训练数据保存_vision transformer训练自己的数据-CSDN博客](https://blog.csdn.net/weixin_51331359/article/details/124514770)
 
 [从零开始手把手搭建Vision Transformers(Pytorch版本) (qq.com)](https://mp.weixin.qq.com/s?__biz=MzU3ODk2Njc5Mg==&mid=2247492959&idx=1&sn=13a39fb0dbf826fe02b563c2ec71eafb&chksm=fd6fe138ca18682e13c3361f6d530e3d27ea4aeea73615940185188d7bc06905aee17020ae24&token=1443126529&lang=zh_CN#rd)
@@ -27,6 +26,7 @@ conda activate python=3.9 -y
 ```
 
 ### model
+
 ```python
 conda create --name model python=3.10 -y
 pip install scikit-learn pandas numpy seaborn matplotlib jupyter openpyxl lightgbm xgboost
@@ -34,6 +34,7 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 ```
 
 ### colab
+
 Google Colab默认提供了GPU加速，因此您无需额外配置GPU版本的PyTorch。此外，Colab中的Python版本为3.7，您可能无法直接指定Python版本为3.8。但是，大多数情况下，3.7版本也可以满足PyTorch和其他库的要求。
 ```python
 !pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
@@ -44,8 +45,19 @@ print(torch.__version__)
 
 ```
 
+### LangChain
+
+```bash
+conda create --name langchain python=3.11 -y
+pip install -r requirements.txt
+pip install -r requirements_api.txt
+pip install -r requirements_webui.txt
+```
+
 ### d2l
+
 ```python
+
 conda create --name d2l python=3.8 -y
 
 pip install d2l==0.17.6 seaborn openpyxl scikit-learn
@@ -61,6 +73,7 @@ conda update -n base conda
 ```
 
 ### tensorflower
+
 只有cuda11.2能用GPU版本，其他已被移除
 [windows安装cuda 11.8以及tensorflow-gpu 2.6_cuda11.8安装_月司的博客-CSDN博客](https://blog.csdn.net/yue81560/article/details/127931471)
 ```python
@@ -72,6 +85,7 @@ pip install tensorflow
 ```
 
 ### fps
+
 ```python
 conda create --name fps python=3.10 -y
 
@@ -80,9 +94,10 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 pip install mss
 ```
 
-
 # 环境管理
+
 ### 环境变量
+
 ```
 ;D:\Environment\anaconda3;D:\Environment\anaconda3\Scripts;D:\Environment\anaconda3\Library\bin;D:\Environment\anaconda3\Library\mingw-w64\bin
 
@@ -111,6 +126,7 @@ Restricted
 ```
 
 ### 软件源
+
 ```shell
 软件包源
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -163,6 +179,7 @@ conda install ipykernel
 pip install --upgrade pip -i http://mirrors.aliyun.com/pypi/simple/
 
 ### 删除conda
+
 ```text
 方法一：
 # 第一步：首先退出环境
@@ -185,6 +202,7 @@ conda remove -n  需要删除的环境名 --all
 ```
 
 ### 验证cuda和cudnn
+
 ```
 在下面路径打开终端
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\extras\demo_suite
@@ -194,7 +212,6 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\extras\demo_suite
 
 .\deviceQuery.exe
 ```
-
 
 ### tensorrt
 

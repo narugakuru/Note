@@ -1,9 +1,14 @@
+---
+tags:
+  - Hadoop
+---
 
 # Hadoop前提条件
 
 VMware Pro16+Centos8
 
 ## 1、修改用户root权限
+
 [[Linux相关#Linux基础命令]]
 1、切换到root用户权限
 
@@ -22,21 +27,19 @@ password：
 [root@Compile user]#
 ```
 
-​    3、执行vi命令，编辑/etc/sudoers文件，添加要提升权限的用户；在文件中找到root  ALL=(ALL) ALL，在该行下添加提升权限的用户信息，如：
+​ 3、执行vi命令，编辑/etc/sudoers文件，添加要提升权限的用户；在文件中找到root ALL=(ALL) ALL，在该行下添加提升权限的用户信息，如：
 
-root    ALL=(ALL)       ALL
-user    ALL=(ALL)       ALL
-说明：格式为（用户名    网络中的主机=（执行命令的目标用户）    执行的命令范围）
+root ALL=(ALL) ALL
+user ALL=(ALL) ALL
+说明：格式为（用户名 网络中的主机=（执行命令的目标用户） 执行的命令范围）
 
     4、保存退出，并恢复/etc/sudoers的访问权限为440
 
 [root@Compile user]# chmod 440 /etc/sudoers
 [root@Compile user]# ls -l /etc/sudoers
--r--r-----. 1 root root 4030 9月  25 00:57 /etc/sudoers
+-r--r-----. 1 root root 4030 9月 25 00:57 /etc/sudoers
 [root@Compile user]#
     5、切换到普通用户，测试用户权限提升功能
-
-
 
 ## 2、两种JDK安装方式
 
@@ -50,8 +53,8 @@ user    ALL=(ALL)       ALL
 你也可以用rpm -qa | grep [java][jdk][gcj]
 
 卸载JAVA环境
-yum -y remove java-1.6.0-openjdk*  //表时卸载所有openjdk相关文件输入
-yum -y remove tzdata-java.noarch   //卸载tzdata-java
+yum -y remove java-1.6.0-openjdk* //表时卸载所有openjdk相关文件输入
+yum -y remove tzdata-java.noarch //卸载tzdata-java
 
 2、安装JDK
 
@@ -90,7 +93,7 @@ export JAVA_HOME  CLASSPATH  PATH
 ```
 
 保存关闭profile文件，执行如下命令生效
-source  /etc/profile
+source /etc/profile
 
 4、设置好后来检验一些
 
@@ -175,8 +178,6 @@ ln -s /home/java/jdk1.8.0_131/bin/java /usr/bin/java
 
 /usr/lib/python3.6/site-packages
 
-
-
 ## 3、全局环境变量配置文件
 
 个人学习时可直接在/etc/profile配置JAVA_HOME等变量,不必配置~/profile
@@ -192,8 +193,6 @@ ln -s /home/java/jdk1.8.0_131/bin/java /usr/bin/java
 - hadoop安装位置 **/usr/local/hadoop**
 - **/etc**为全局配置文件存放处
 - **/usr/lib**下一般放gcc，jdk，python的运行环境，sdk文件一般都在这
-
-
 
 ## 5、安装SSH、配置SSH无密码登陆
 
@@ -249,19 +248,17 @@ ListenAddress ::
 PasswordAuthentication yes #允许通过账号密码验证
 ```
 
- 开启  sshd  服务，输入 **sudo service sshd start**
+ 开启 sshd 服务，输入 **sudo service sshd start**
 
 ![img](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20161008124204950)
 
-检查  sshd  服务是否已经开启，输入**ps -e | grep sshd**
+检查 sshd 服务是否已经开启，输入**ps -e | grep sshd**
 
 ![img](https://img-blog.csdn.net/20161008124257998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
 
-或者输入**netstat -an | grep 22**  检查  **22** 号端口是否开启监听
+或者输入**netstat -an | grep 22** 检查 **22** 号端口是否开启监听
 
 ![img](https://img-blog.csdn.net/20161008124408719?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-
 
 ## 6、镜像源修改
 
@@ -314,9 +311,6 @@ Cleaning up list of fastest mirrors
 [root@kangvcar ~]# yum list        //总共列出了9954个包
 ```
 
-
-
-
 # #Centos8集群
 
 ## 1、基本配置
@@ -325,7 +319,7 @@ Cleaning up list of fastest mirrors
 
 使用指令： yum install ibus-libpinyin 安装 
 
-​          reboot            安装好后重启
+​ reboot 安装好后重启
 
 设置==>语言，添加
 
@@ -381,8 +375,6 @@ DNS2=8.8.8.8
 
 测试：ifconfig查看IP地址，虚拟机ping宿主机10.100.29.22，宿主机ping虚拟机验证网络连通
 
-
-
 ## 2、虚拟机网络连接不成功
 
 注意！！控制面板VM适配器的IP地址，VM网络编辑器子网网关IP，虚拟机ifconfig的IP，全部不能相同，但必需在同一网段下
@@ -396,17 +388,13 @@ DNS2=8.8.8.8
 所有网关都设置为同一个地址192.168.x.2
 **
 
-
-
 ## 3、修改主机名(永久)
 
   	此处本系统是redhat7.1, 修改本地主机名的文件是: /etc/hostname（版本不同，可能不同）
 
-​     把里面的内容（原主机名）改为目标主机名即可
+​ 把里面的内容（原主机名）改为目标主机名即可
 
-​     修改以后， 立即生效， 不用重启
-
-
+​ 修改以后， 立即生效， 不用重启
 
 ## 4、防火墙
 
@@ -443,21 +431,19 @@ service iptables stop
 service iptables start 
 ```
 
-
-
 ## 5、SSH配置
 
 `netstat -ntlp`查看网络端口
 
-1、  首先，要确保CentOS安装了  **openssh-server**，在终端中输入  **yum list installed | grep openssh-server**
+1、 首先，要确保CentOS安装了 **openssh-server**，在终端中输入 **yum list installed | grep openssh-server**
 
 ![image-20210925000542689](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20210925000542689.png)
 
-此处显示已经安装了  openssh-server，**如果又没任何输出显示表示没有安装**  openssh-server，
+此处显示已经安装了 openssh-server，**如果又没任何输出显示表示没有安装** openssh-server，
 
-通过输入  **`yum install openssh-server`**来进行安装**openssh-server**
+通过输入 **`yum install openssh-server`**来进行安装**openssh-server**
 
-2、  找到了  **/etc/ssh/**  目录下的sshd服务配置文件 **sshd_config**，用Vim编辑器打开
+2、 找到了 **/etc/ssh/** 目录下的sshd服务配置文件 **sshd_config**，用Vim编辑器打开
 
 将文件中，关于监听端口、监听地址前的 # 号去除
 
@@ -469,17 +455,15 @@ ListenAddress ::
 PasswordAuthentication yes #允许通过账号密码验证
 ```
 
-3、  开启  sshd  服务，输入 **`sudo service sshd start`**
+3、 开启 sshd 服务，输入 **`sudo service sshd start`**
 
-检查  sshd  服务是否已经开启，输入**`ps -e | grep sshd`**
+检查 sshd 服务是否已经开启，输入**`ps -e | grep sshd`**
 
 ![image-20210925000823111](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20210925000823111.png)
 
-或者输入**`netstat -an | grep 22`**  检查  **22** 号端口是否开启监听
+或者输入**`netstat -an | grep 22`** 检查 **22** 号端口是否开启监听
 
 ![image-20210925000831948](https://cdn.jsdelivr.net/gh/narugakuru/images/img/image-20210925000831948.png)
-
-
 
 ## 集群搭建
 
@@ -496,9 +480,6 @@ PasswordAuthentication yes #允许通过账号密码验证
 2、克隆slave虚拟机
 
 3、配置slave虚拟机的IP地址，网关相同
-
-
-
 
 # phpStudy
 
@@ -685,11 +666,9 @@ success
 处理结果
 页面可以访问了
 
-
-
 # 8. 制作bin安装文件
 
-linux 下制作二进制 .bin 的文件        孤雁奉献 制做方法是使用cat 命令将执行脚本和打包文件同事放到一个.bin的文件里 这样安装的时候只要使用一个包，直接执行该包即可安装完毕，简单方便。
+linux 下制作二进制 .bin 的文件 孤雁奉献 制做方法是使用cat 命令将执行脚本和打包文件同事放到一个.bin的文件里 这样安装的时候只要使用一个包，直接执行该包即可安装完毕，简单方便。
 
  例：制作安装apache、mysql的安装脚本包 
 
@@ -714,9 +693,7 @@ make make install exit 0
 #cat install.sh packages.tar.gz >install.bin  
 ```
 
-这样就生成install.bin的安装文件，改文件是由shell脚本和二进制合成的。前半部分是脚本后半部分是二进制文件，用strings等二进制查看命令可以看到 最主要的是下面这句，是将二进制文件从.bin文件里分离出来 sed -n -e '1,/^exit 0$/!p' $0 > "${dir_tmp}/packages.tar.gz" 2>/dev/null  安装的时候直接执行 sh install.bin 安装这个方法可以将我们平时常使用的安装脚本化，然后打包。以后使用就方便了。
-
-
+这样就生成install.bin的安装文件，改文件是由shell脚本和二进制合成的。前半部分是脚本后半部分是二进制文件，用strings等二进制查看命令可以看到 最主要的是下面这句，是将二进制文件从.bin文件里分离出来 sed -n -e '1,/^exit 0$/!p' $0 > "${dir_tmp}/packages.tar.gz" 2>/dev/null 安装的时候直接执行 sh install.bin 安装这个方法可以将我们平时常使用的安装脚本化，然后打包。以后使用就方便了。
 
 # 9. hadoop启动报错
 
@@ -731,8 +708,6 @@ make make install exit 0
 ![在这里插入图片描述](https://cdn.jsdelivr.net/gh/narugakuru/images/img/20210406135053723.png)
 删除know_hosts文件，删除.ssh文件夹
 重新生成.ssh，并且重新启动hadoop
-
-
 
 # 10. DFSRouter: RECEIVED SIGNAL 15: SIGTERM
 
@@ -750,11 +725,9 @@ hadoop dfsadmin -refreshNodes
 
 问题总结：balancer停了一段时间了，以前balancer的 pid现在是router里的一个线程，所以stop balancer的时候，router退出了。
 
-
-
 # 11. 拒绝连接
 
-java.io.IOException: java.net.ConnectException: Call From node01/192.168.100.10 to node01:10020 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+java.io.IOException: java.net.ConnectException: Call From node01/192.168.100.10 to node01:10020 failed on connection exception: java.net.ConnectException: Connection refused; For more details see: http://wiki.apache.org/hadoop/ConnectionRefused
 
 报错信息提示，在访问端口 100020的时候出错，这表示DataNode 需要访问 MapReduce JobHistory Server，而默认值是： 0.0.0.0:10020 。
 
@@ -775,6 +748,3 @@ jps 查看 ， 麻蛋 ，忘了打开，
 **在执行一个Hadoop的文件读写任务是发生这个错误：Call From master/192.168.170.128 to master:8020 failed on connection exception: java.net.ConnectException: Connection。**
 
 意思大致是无法连接到master的8020端口。该问题造成的主要原因是和Hadoop以及Linux系统的版本有关，dfs.defaultFS的默认端口号为8020，但一般 在配置core-site.xml时大家都会配成9000（具体为什么我也不知道，网上只教怎么配，没说为什么），但是在Ubuntu系统中9000端口好像不起作用。将其重新改回8020即可。
-
-
-

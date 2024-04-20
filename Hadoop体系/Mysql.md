@@ -1,3 +1,9 @@
+---
+tags:
+  - Hadoop
+---
+
+
 [如何在 Fedora 上安装 MySQL 5.7 34/33/32/31/30 |ComputingForGeeks](https://computingforgeeks.com/how-to-install-mysql-5-7-on-fedora/)
 
 

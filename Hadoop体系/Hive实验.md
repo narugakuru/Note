@@ -1,7 +1,11 @@
-
+---
+tags:
+  - Hadoop
+---
 [(125条消息) HIVE综合练习-SQL练习之影评案例_诺卡先生的博客-CSDN博客](https://blog.csdn.net/weixin_44202489/article/details/106469170)
 
 ### 分别求男性，女性当中评分最高的10部电影
+
 （性别，电影名，影评分）
 （1）分析思路：
 
@@ -35,6 +39,7 @@ order by avgrate desc
 limit 10;
 
 ### 求movieid = 2116这部电影各年龄段
+
 （因为年龄就只有7个，就按这个7个分就好了）的平均影评（年龄段，影评分）
 （1）分析思路：
 
@@ -48,8 +53,8 @@ from t_user a join t_rating b on a.userid=b.userid
 where b.movieid=2116 
 group by a.age;
 
-
 ### 该影评库中各种类型电影中评价最高的5部电影（类型，电影名，平均影评分）
+
 （1）分析思路：
 
 需求字段：电影id　movieid
@@ -82,4 +87,3 @@ create table answer8_A as
 select a.id as id, a.name as name, a.years as years, a.rate as rate, tv.type as type 
 from answer7_A a 
 lateral view explode(split(a.type,"\\|")) tv as type;
-

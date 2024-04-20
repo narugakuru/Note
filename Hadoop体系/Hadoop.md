@@ -1,3 +1,8 @@
+---
+tags:
+  - Hadoop
+---
+
 [[hadoop集群]]
 [[Hadoop伪分布式部署]]
 [[Hive]]
@@ -225,7 +230,6 @@ YARN_NODEMANAGER_USER=root
 
 ``
 
-
 ## 1、Hadoop修改配置文件四步走
 
 1、修改配置文件
@@ -235,8 +239,6 @@ YARN_NODEMANAGER_USER=root
 3、hdsf namenode -format
 
 4、start-dfs.sh
-
-
 
 ## 2、hdfs-site.xml的可选项
 

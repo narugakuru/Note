@@ -1,12 +1,17 @@
+---
+tags:
+  - Hadoop
+---
 
 ### 运行指令
+
 nohup hive --service metastore -p 9083 >/dev/null &
 	这一命令用于启动Hive元数据存储服务，会监听在端口9083上。nohup的作用是在当前终端关闭的时候，它仍然会在后台持续运行，而“>/dev/null”表示将运行的输出结果重定向到/dev/null文件，即不输出任何内容，最后的“&”表示将该命令放入后台运行。
 hive --service metastore &
 hive --service hiveserver2 &
 
-
 ### 远程访问hive
+
 IDEA中访问hive报错，因为没有开放权限
 org.apache.hadoop.ipc.RemoteException: User: root is not allowed to impersonate root
 ```xml
@@ -24,8 +29,8 @@ hadoop.proxyuser.root.groups中的root是用户，value里面的root是group
   </property>
 ```
 
-
 ### 常用函数
+
 #### 一、常用日期函数
 
 1. unix_timestamp:返回当前或指定时间的时间戳	
@@ -89,15 +94,13 @@ select last_day('2020-02-30');
 20. date_format(): 格式化日期
 select date_format('2020-10-28 12:12:12','yyyy/MM/dd HH:mm:ss');
 
-
-
-
 #### 二、常用取整函数
+
 21. round： 四舍五入
 select round(3.14);
 select round(3.54);
 
-22. ceil：  向上取整
+22. ceil： 向上取整
 select ceil(3.14);
 select ceil(3.54);
 
@@ -106,6 +109,7 @@ floor： 向下取整
 select floor(3.54);
 
 #### 三、常用字符串操作函数
+
 24. upper： 转大写
 select upper('low');
 
@@ -115,19 +119,20 @@ select lower('low');
 26. length： 长度
 select length("atguigu");
 
-27. trim：  前后去空格
+27. trim： 前后去空格
 select trim(" atguigu ");
 
 28. lpad： 向左补齐，到指定长度
 select lpad('atguigu',9,'g');
 
-29. rpad：  向右补齐，到指定长度
+29. rpad： 向右补齐，到指定长度
 select rpad('atguigu',9,'g');
 
 30. regexp_replace：使用正则表达式匹配目标字符串，匹配成功后替换！
 SELECT regexp_replace('2020/10/25', '/', '-');
 
 #### 四、集合操作
+
 31. size： 集合中元素的个数
 select size(friends) from test3;
 
@@ -144,6 +149,7 @@ select array_contains(friends,'bingbing') from test3;
 select sort_array(friends) from test3;
 
 #### 五、多维分析
+
 36. grouping sets:多维分析
 
 
@@ -151,6 +157,7 @@ select sort_array(friends) from test3;
 *安装MySQL数据库
 
 ### *安装Hive
+
 Hive已上传至Linux主机，并保存到/root目录下
 解压解包Hive程序包
 【命令】tar -zxvf /root/apache-hive-3.1.3-bin.tar.gz -C /opt
@@ -170,6 +177,7 @@ export PATH=$PATH:$HIVE_HOME/bin
 【命令】source /etc/profile.d/hive-env.sh
 
 ### *运行Hive前准备
+
 前提条件 【Hive 使用 Hadoop 存储】
 已成功安装Hadoop，并成功启动hdfs&yarn服务
 
@@ -177,13 +185,14 @@ export PATH=$PATH:$HIVE_HOME/bin
 【命令】$HADOOP_HOME/bin/hadoop fs -mkdir /tmp
 【命令】$HADOOP_HOME/bin/hadoop fs -chmod g+w /tmp
 
-
 ### *部署MySQL JDBC驱动
+
 使用Final Shell上传驱动文件到Linux目录中
 把驱动文件移动到HIVE_HOME/lib目录中
 【命令】mv <Driver_file_path> $HIVE_HOME/lib/
 
 ### *配置Hive服务
+
 编辑$HIVE_HOME/conf/hive-site.xml
 【命令】vim $HIVE_HOME/conf/hive-site.xml
 
@@ -263,7 +272,9 @@ export HIVE_AUX_JARS_PATH=/opt/hive/lib
 ```
 
 *Hive Schema(架构)工具
+
 ### 初始化元(meta)数据库，设置为mysql
+
 【命令】$HIVE_HOME/bin/schematool -dbType mysql -initSchema
 
 查询Schema信息
@@ -273,7 +284,9 @@ export HIVE_AUX_JARS_PATH=/opt/hive/lib
 
 
 *运行Hive CLI （Command Line Interface）【命令行】方式 ***不推荐
-	# 启动并进入命令行交互
+
+# 启动并进入命令行交互
+
 	【命令】$HIVE_HOME/bin/hive
 
 	# 命令行执行查询
@@ -287,13 +300,13 @@ export HIVE_AUX_JARS_PATH=/opt/hive/lib
 
 	￥￥￥<HQ脚本文件路径>支持远程URI
 
-
 ### *运行Hive metastore 服务
+
 	# 后台运行（在hive-site.xml中指定配置）
 【命令】hive --service metastore &
 
-
 ### *运行Hive HiveServer2 和 Beeline
+
 	# 启动HiveServer2服务
 【命令】$HIVE_HOME/bin/hiveserver2
 --或者
@@ -330,8 +343,11 @@ export HIVE_AUX_JARS_PATH=/opt/hive/lib
 
 
 *浏览HiveServer2的Web用户界面 
-	# Web UI提供配置、日志记录、指标和活动会话信息。
-	# 默认情况下，Web UI在端口10002。
+
+# Web UI提供配置、日志记录、指标和活动会话信息
+
+# 默认情况下，Web UI在端口10002
+
 http://<hs2_ip>:10002/
 
 	# 修改默认配置
@@ -347,9 +363,8 @@ http://<hs2_ip>:10002/
 </property>
 ```
 
-
-
 ### 管理Hive配置
+
 	# 默认加载配置文件的目录
 【命令】cd $HIVE_HOME/conf/
 
@@ -361,8 +376,11 @@ http://<hs2_ip>:10002/
 
 
 *Hive日志（Hive使用log4j 进行日志记录）
-	# 日志存储默认位置(/tmp/<user.name>目录中)
-	# 查看hive日志内容
+
+# 日志存储默认位置(/tmp/<user.name>目录中)
+
+# 查看hive日志内容
+
 	【命令】cat /tmp/<用户名>/hive.log
 
 	# 修改日志存储位置（vim命令 等同于 vi命令）
@@ -373,10 +391,3 @@ http://<hs2_ip>:10002/
 	hive.log.dir=<日志存储目录路径>
 
 	*******以上为hive-log4j.properties文件中内容*********
-
-
-
-
-
-
-

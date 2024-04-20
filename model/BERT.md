@@ -8,6 +8,7 @@
 - 使用masked language model进行预训练
 
 ### 对比
+
 ![[attachments/9f2e9b6f228a0e95cc535f433dcc7b1e_MD5.png]]
 **GPT采用了transformer但为单向；而ELMo采用了双向的LSTM，但这种双向只是the concatenation of independently trained left-to-right and right-to-left LSTM，是一种伪双向，而且LSTM在捕捉长距离依赖上是弱于transformer的；**
 - 在Transformer模型中，双向性主要通过自注意力（Self-Attention）机制实现。自注意力允许模型在生成每个单词的表示时考虑输入序列中的所有单词，包括它自己。因此，在BERT中，当计算某个单词的表示时，模型会考虑到整个输入序列中的所有单词，这就是所谓的双向上下文。
@@ -20,6 +21,7 @@
  - GPT的单向特性使其特别适合于文本生成任务，如文本续写、机器翻译、对话生成等。在这些任务中，模型需要根据给定的上文生成下文，而GPT的设计恰好符合这种顺序生成的需求。
 
 ### 输入表示
+
 由三个embeding相加而成：
 ![[attachments/9e77f111e09d70bd1429aad2fd98e603_MD5.png]]
 - Token Embeddings是词向量，第一个单词是CLS标志，可以用于之后的分类任务
@@ -32,23 +34,28 @@
  
 ![[attachments/50495a852bd19b9a304d940239e85957_MD5.png]]
 
-
 #### MLM
+
 预训练阶段随机mask掉一定比例的input tokens，然后只预测这些被mask掉的tokens。这就是所谓的 “masked LM” (MLM), 其实就是 Cloze task完形填空，这样可以让bert同时学习到左右两侧的信息
 在训练过程中随机mask 15%的token，而不是把像cbow一样把每个词都预测一遍。最终的损失函数只计算被mask掉那个token。
 
 因为序列长度太大（512）会影响训练速度，所以90%的steps都用seq_len=128训练，余下的10%步数训练512长度的输入。
+
 #### NSP下句预测
+
 许多重要的下游任务，例如问答（QA）和自然语言推断（NLI），都是基于理解两个文本句子之间的关系的。这个没有办法直接由语言模型捕捉，所以他们增加了一个 next sentence prediction任务。具体的，对于训练语料中一对句子A和B，B有一半的概率是A的下一句，一半的概率是随机的句子。
 
 ### 微调
+
 a 句子对分类（蕴含、矛盾或中立关系）
 b 单句分类 （积极消极，新闻小说闲聊）
 c 问答 （输出答案的start-end）
 d 单句标记 （命名实体识别，词性标注
 ![[attachments/18fe60d9b27960d907ead652ea513b2c_MD5.png]]
 ![[attachments/aa6341ae781751a751d8a60e2c85046f_MD5.png]]
+
 ### 性能
+
 斯坦福问题集，SWAG对抗生成数据集表现很好
 ![[attachments/d74051218d68f39323f41c533b89c4f4_MD5.png]]
 
@@ -65,15 +72,15 @@ BERT是截至2018年10月的最新state of the art模型，通过预训练和微
 （3）BERT对于文本生成并不是最佳选择；
 （4）分类时做平均可能要比只用[CLS] token的效果更好
 
-
 # 名词解释
+
 ### Sentence Pair Classification（句子对分类）
 
 在这种任务中，模型需要处理一对句子，并判断这两个句子之间的关系。例如，给定两个句子A和B，模型可能需要判断B是否是A的逻辑后续（如“下一句预测”任务），或者判断这两个句子是否属于相同的类别（如“自然语言推理”任务中的蕴含、矛盾或中立关系）。
 
 - BERT处理句子对分类任务的方法是，在两个句子之间插入一个特殊的分隔符`[SEP]`，并在句子对的开头加上一个特殊的分类符号`[CLS]`。模型通过预训练学习到的知识，能够理解并编码这两个句子的内容及其上下文关系，最后使用`[CLS]`标记的输出来进行分类。
 
-###  Single Sentence Classification（单句分类）
+### Single Sentence Classification（单句分类）
 
 单句分类任务要求模型对给定的单个句子进行分类。例如，判断一个句子表达的情感是积极的还是消极的（情感分析任务），或者判断一个句子属于哪个类别（如新闻分类）。
 
@@ -92,4 +99,5 @@ BERT是截至2018年10月的最新state of the art模型，通过预训练和微
 - **如何处理：** 在单句标注任务中，BERT接收整个句子作为输入，并在句子的开头加上`[CLS]`标记。模型为句子中的每个单词生成一个向量表示，这些向量随后被用来为每个单词预测一个标签。与传统的基于序列的模型（如LSTM）不同，BERT能够利用其双向的特性，同时考虑每个单词前后的上下文，从而提高标注的准确性。
 
 ### 参考
+
 [[NLP]BERT详解之一：论文解读 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/144026536)

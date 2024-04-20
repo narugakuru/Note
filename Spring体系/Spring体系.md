@@ -1,7 +1,7 @@
 - [[SpringScurity]]
 - [[Boot学习笔记]]
 - [[SpringBoot/assets/SpringBoot]]
-- [[Mybatis]]
+- [[数据库/Mybatis/Mybatis]]
 - [[Java开发编码规范]]
 - [[Bug]]
 - [[SSM整合]]

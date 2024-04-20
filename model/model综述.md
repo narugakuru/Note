@@ -37,9 +37,8 @@
 
 [周志华教授：如何做研究与写论文](https://zhuanlan.zhihu.com/p/98747105)
 
-
-
 # 网络架构
+
 ### 1. **CoAtNet**
 
 CoAtNet结合了卷积神经网络（CNN）和Transformer的优势，通过混合这两种架构的特点，实现了在图像识别任务上的显著性能提升。CoAtNet通过调整卷积层和Transformer层的结合方式，优化了模型的表示能力和效率。
@@ -65,6 +64,7 @@ EfficientNetV2是EfficientNet系列的最新进展，它对原有架构进行了
 作为Swin Transformer的进一步改进，Swin Transformer V2在原有模型的基础上引入了新的设计和优化，以提高模型的性能和效率。这些改进包括更有效的层次化结构、改进的注意力机制和更灵活的模型缩放策略。
 
 ### 基于U-Net的改进网络
+
 ![[attachments/bdf6f6e7e71587a5bb22950427e3a7cb_MD5.png]]
 
 1. **Attention U-Net**：在U-Net的基础上增加了注意力机制，特别是在解码器部分。通过这种方式，模型能够更加关注于图像的关键部分，从而提高图像分割的准确性。
@@ -90,4 +90,5 @@ EfficientNetV2是EfficientNet系列的最新进展，它对原有架构进行了
 ![[attachments/ddb4adb8c7184b57b60f0cdc3a98201c_MD5.png]]
 
 # Swin Transformer
+
 ![[attachments/da9ef09d850467f1784b72e1c6c59ded_MD5.png]]

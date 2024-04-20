@@ -1,3 +1,9 @@
+---
+tags:
+  - docker
+  - linux操作
+---
+
 [Docker更新容器镜像的三种方法-腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/2086860)
 
 # 基础操作

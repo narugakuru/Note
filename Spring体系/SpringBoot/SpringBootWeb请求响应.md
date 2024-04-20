@@ -733,8 +733,6 @@ public class RequestController {
 
 
 
-
-
 ## 2. 响应
 
 前面我们学习过HTTL协议的交互方式：请求响应模式（有请求就有响应）

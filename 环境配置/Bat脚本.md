@@ -1,3 +1,7 @@
+---
+tags:
+  - 脚本
+---
 
 # 清除DNS缓存
 ```js
@@ -350,6 +354,39 @@ start  npm run serve
 cmd /k "cd /d 路径&&命令"
 例如E盘下的A文件下的B文件，命令是anywhere
 cmd /k "cd /d E:\A\B&&anywhere"
+```
+
+```bat
+
+@echo off
+start "" "E:\ProgramFileCode\Apifox\Apifox.exe"
+start "" "E:\ProgramFileCode\datagrip-2021.2.4.win\bin\datagrip64.exe"
+start "" "D:\ProgramFileCode\Microsoft VS Code\Code.exe"
+start "" "D:\ProgramFileCode\IntelliJ IDEA 2023.2.1\bin\idea64.exe"
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --profile- directory="Profile 2"
+start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+start "" "C:\Users\Raisei\AppData\Local\Obsidian\Obsidian.exe"
+
+@echo off
+start "Apifox" "E:\ProgramFileCode\Apifox\Apifox.exe"
+start "datagrip" "E:\ProgramFileCode\datagrip-2021.2.4.win\bin\datagrip64.exe"
+start "Microsoft VS Code" "D:\ProgramFileCode\Microsoft VS Code\Code.exe"
+start "IDEA" "D:\ProgramFileCode\IntelliJ IDEA 2023.2.1\bin\idea64.exe"
+start "Chrome" "C:\Program Files\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 2"
+start "Edge" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+start "Obsidian" "C:\Users\Raisei\AppData\Local\Obsidian\Obsidian.exe"
+
+Set WshShell = CreateObject("WScript.Shell")
+
+WshShell.Run """E:\ProgramFileCode\Apifox\Apifox.exe""", 0, False
+WshShell.Run """E:\ProgramFileCode\datagrip-2021.2.4.win\bin\datagrip64.exe""", 0, False
+WshShell.Run """D:\ProgramFileCode\Microsoft VS Code\Code.exe""", 0, False
+WshShell.Run """D:\ProgramFileCode\IntelliJ IDEA 2023.2.1\bin\idea64.exe""", 0, False
+WshShell.Run """C:\Program Files\Google\Chrome\Application\chrome.exe --profile-directory=Profile 2""", 0, False
+WshShell.Run """C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe""", 0, False
+WshShell.Run """C:\Users\Raisei\AppData\Local\Obsidian\Obsidian.exe""", 0, False
+
+
 ```
 
 

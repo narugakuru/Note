@@ -1,4 +1,7 @@
-
+---
+tags:
+  - Hadoop
+---
 Hadoop伪分布式部署（Pseudo-Distributed Mode）
 *部署前提
 	·已安装JDK1.8，并配置JAVA_HOME环境变量
