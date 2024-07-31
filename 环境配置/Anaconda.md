@@ -6,11 +6,16 @@ pip freeze > requirements.txt
 - model 数学建模环境3.10
 - tf tensorflow没有使用
 - yolo torch2.0+cu118和onnx
+- qt，制作qfluent工具
+- aoe，帝国脚本
 
 # 虚拟环境
 
 torch安装
 [download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
+
+### fluent
+conda create --name qt python=3.10 -y
 
 ### vit
 

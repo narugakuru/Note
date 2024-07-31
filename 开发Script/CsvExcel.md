@@ -1,3 +1,17 @@
+![](%E5%BC%80%E5%8F%91Script/attachments/Pasted%20image%2020240730163733.png)
+![](%E5%BC%80%E5%8F%91Script/attachments/Pasted%20image%2020240730163848.png)
+![](%E5%BC%80%E5%8F%91Script/attachments/Pasted%20image%2020240730164413.png)
+
+seq_id, toroku_renban, tsumi_techo, kumiaino, torokuno
+每行递增1
+seq_id，5位，10000
+toroku_renban，3位，333
+batchno，3位，333
+tsumi_techo, 10位，1111111111
+kumiaino，6位，666666
+torokuno，7位，7777777
+tsumi_techo_renban，5位，55555
+
 
 ### excecl2csv
 
