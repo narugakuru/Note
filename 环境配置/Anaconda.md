@@ -1,3 +1,6 @@
+```
+nohup bash -c 'cd data && mkdir coco && cd coco && wget http://images.cocodataset.org/zips/val2017.zip' > output.log 2>&1 &
+```
 pip freeze > requirements.txt
 
 - d2l 动手学深度学习3.8
@@ -7,6 +10,7 @@ pip freeze > requirements.txt
 - tf tensorflow没有使用
 - yolo torch2.0+cu118和onnx
 - qt，制作qfluent工具
+- side,制作qfluent工具
 - aoe，帝国脚本
 
 # 虚拟环境
@@ -15,7 +19,7 @@ torch安装
 [download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
 
 ### fluent
-conda create --name qt python=3.10 -y
+conda create --name qt python=3.10.14 -y
 
 ### vit
 
