@@ -1,11 +1,10 @@
-
+### SQL
 我希望像sql数据插入下面的数据，表结构如下
 comments对应每条数据下面的#注释说明，
 请你编写sql插入数据  
-CREATE TABLE cyclic_values ( id TEXT PRIMARY KEY, replace_values TEXT, comments TEXT );
 
 ```sql
-CREATE TABLE id_values (
+CREATE TABLE start_values (
     id TEXT PRIMARY KEY,
     replace_values TEXT,
     comments TEXT
@@ -16,54 +15,115 @@ CREATE TABLE cyclic_values (
     comments TEXT
 );
 
-INSERT OR IGNORE INTO cyclic_values (id, replace_values, comments) VALUES
-('yobi1', '[" "]', '备用字段1'),
-('torokummdd_id', '["528", "1228"]', '注册编号ID列表'),
-('nendo_cource_id', '["2413", "2412"]', '年度课程ID列表'),
-('tsumi_kaikubun_id', '["4"]', '积立类别ID'),
-('tsumi_kaikubun', '["4"]', '积立类别'),
-('tsumi_kinkubun_id', '["2"]', '积立金额类别ID'),
-('tsumi_kinkubun', '["2"]', '积立金额类别'),
-('boshu_nendo_id', '["2024"]', '募集年度ID'),
-('boshu_nendo', '["2024"]', '募集年度'),
-('boshu_kaiji_id', '["3"]', '募集开始ID'),
-('boshu_kaiji', '["3"]', '募集开始'),
-('man_shuzen_kubun_id', '["3"]', '满修正类别ID'),
-('err_zandaka_shomei_kibojiki', '["0"]', '余额证明记录类别'),
-('err_kumiaino', '["0"]', '组合号码错误标志'),
-('hagaki_sofu_ym', '[""]', '明信片送付年月'),
-('err_kubun', '["0", "1", "2", "3"]', '"0"：正常 "1"：ワーニング "2"：軽度 "3"：重度'),
-('err_sofu_kibokakunin', '["0", "1"]', '送付记录确认'),
-('yushiyotei_gengo', '["1", "2", "3", "4"]', '预计语言'),
-('gengo_kubun', '["1", "2", "3", "4"]', '语言类别'),
-('gengo_eiji', '["M", "T", "S", "H"]', '"M"：明治 "T"：大正 "S"：昭和 "H"：平成'),
-('nyuryoku_shorui_flag', '["1", "2"]', '"1"：申込書及び送付先指定依頼書あり "2"：申込書のみ "3"：送付先指定依頼書のみ'),
-('irai_naiyokubun', '["1", "2", "3"]', '"1"：新規登録 "2"：変更登録 "3"：送付先指定の中止'),
-('sofu_taishoshorui', '["1", "2", "3"]', '"1"：全ての書類 "2"：残高証明書及び買入計算書 注：依頼内容区分=\'3\'(送付先指定の中止)の場合は、スペースとする'),
-('kinriyugu_kubun', '["0", "1"]', '"0"：利率優遇商品申込無し "1"：利率優遇商品申込有り'),
-('tsumi_riyu', '["1", "2", "3", "4"]', '"1"：大規模修繕 "2"：利回り "3"：機構預り "4"：情報誌'),
-('err_sofu_irai_naiyokubun', '["0"]', '错误送付请求内容类别'),
-('nyuryoku_tsumi_kaikubun', '["4"]', '输入积立类别'),
-('nyuryoku_tsumi_kinkubun', '["2"]', '输入积立金额类别'),
-('nyuryoku_torokummdd', '["528", "1228"]', '输入注册编号ID列表'),
-('tsumi_kaiseq_id', '["1", "2", "3", "4", "5", "6", "7", "8"]', '积立会序号ID列表'),
-('hokankubun', '["1", "2"]', '保管类别'),
-('kaigocd', '["1010"]', '介护代码'),
-('saiken_hakkohi', '["20241010"]', '债权发布日期'),
-('saiken_mankihi', '["20241010"]', '债权满期日期'),
-('hakko_nendo_id', '["2024"]', '发货年度ID'),
-('ribarai_kaisuseq_id', '["10"]', '利率变更序号ID');
-
-
 ```
 
+# API
 - csv_path = csv文件夹/文件路径
 - CSVtoPostgresInserter
-	- 输入csv_path，调用CSVProcessor处理数据
-	- 获取处理后的replace文件夹路径
-	- 读取csv插入数据库
+	- replace_csv_insert2db，输入csv_path，调用CSVProcessor处理数据。获取处理后的replace文件夹路径，读取csv插入数据库
 - CSVProcessor
 	- process_csv，输入csv_path，对文件进行处理后输出到replace文件夹
-- config
-	- 存储全局参数
+	- insert_csv_to_postgresql_with_transaction，执行插入
+	- filter_latest_csv_files，过滤同名文件
+- config_setup
+	- 单例模式管理全局参数
+	- ListHandler，用于QT界面的日志
+	- StreamHandler，控制台输出日志
+- backup
+	- 备份文件
 
+
+### 对话框添加数据
+```python
+import sys
+from PySide6.QtWidgets import (
+    QApplication, QWidget, QTableView, QVBoxLayout, QPushButton, QDialog,
+    QLineEdit, QMessageBox, QHBoxLayout, QLabel
+)
+from PySide6.QtSql import QSqlDatabase, QSqlTableModel
+
+# 创建一个对话框用于新增数据
+class AddDataDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("新增数据")
+
+        # 设置布局
+        layout = QVBoxLayout()
+        self.input1 = QLineEdit(self)
+        self.input2 = QLineEdit(self)
+        submit_button = QPushButton("提交", self)
+        submit_button.clicked.connect(self.submit_data)
+
+        # 添加输入字段和按钮到布局
+        layout.addWidget(QLabel("Column1:"))
+        layout.addWidget(self.input1)
+        layout.addWidget(QLabel("Column2:"))
+        layout.addWidget(self.input2)
+        layout.addWidget(submit_button)
+        self.setLayout(layout)
+
+    def submit_data(self):
+        if self.input1.text() and self.input2.text():
+            self.accept()
+        else:
+            QMessageBox.warning(self, "错误", "请完整输入数据。")
+
+    def get_data(self):
+        return self.input1.text(), self.input2.text()
+
+# 创建主窗口
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("SQLite 数据表格")
+
+        # 创建数据库连接
+        db = QSqlDatabase.addDatabase('QSQLITE')
+        db.setDatabaseName('database.db')
+
+        if not db.open():
+            QMessageBox.critical(self, "错误", "无法打开数据库")
+            sys.exit(1)
+
+        # 创建模型
+        self.model = QSqlTableModel(self)
+        self.model.setTable('your_table_name')  # 你的表名
+        self.model.select()
+
+        # 创建视图
+        self.view = QTableView()
+        self.view.setModel(self.model)
+
+        # 创建新增数据按钮
+        self.add_button = QPushButton("新增数据")
+        self.add_button.clicked.connect(self.open_add_data_dialog)
+
+        # 设置布局
+        layout = QVBoxLayout()
+        layout.addWidget(self.view)
+        layout.addWidget(self.add_button)
+        self.setLayout(layout)
+
+    def open_add_data_dialog(self):
+        dialog = AddDataDialog(self)
+        if dialog.exec():
+            data1, data2 = dialog.get_data()
+            new_record = self.model.record()
+            new_record.setValue("column1", data1)
+            new_record.setValue("column2", data2)
+            if not self.model.insertRecord(-1, new_record):
+                QMessageBox.critical(self, "错误", "无法新增数据。")
+            else:
+                self.model.submitAll()  # 提交更改
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    # 创建并展示主窗口
+    window = MainWindow()
+    window.show()
+
+    sys.exit(app.exec())
+
+```
