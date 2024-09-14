@@ -3,6 +3,17 @@ tags:
   - 脚本
 ---
 
+# 批量启动软件
+```shell
+@echo off
+start "" "E:\ProgramFileCode\Apifox\Apifox.exe"
+start "" "E:\ProgramFileCode\datagrip-2021.2.4.win\bin\datagrip64.exe"
+start "" "D:\ProgramFileCode\IntelliJ IDEA 2023.2.1\bin\idea64.exe"
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 2"
+start "" "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+start "" "C:\Users\Raisei\AppData\Local\Obsidian\Obsidian.exe"
+```
+
 # 清除DNS缓存
 ```js
 ipconfig /flushdns

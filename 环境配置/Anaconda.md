@@ -15,9 +15,17 @@ pip freeze > requirements.txt
 
 # 虚拟环境
 
-torch安装
 [download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
 
+```
+torch安装
+
+
+conda create --name dsp python=3.8 -y
+
+pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+
+```
 ### fluent
 conda create --name qt python=3.10.14 -y
 
@@ -220,6 +228,13 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\extras\demo_suite
 .\bandwidthTest.exe
 
 .\deviceQuery.exe
+
+
+import torch
+print(torch.cuda.is_available())  # 检查GPU是否可用
+print(torch.cuda.get_device_name(0))  # 输出GPU设备的名称
+print(torch.version.cuda)  # 查看使用的CUDA版本
+
 ```
 
 ### tensorrt
