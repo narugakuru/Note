@@ -1,8 +1,37 @@
+# DSPNet
+2cFrWIS4y9EM
+### numpy
+```
+find . -type f -name "*.py" -exec sed -i 's/np\.float/np.float64/g' {} +
+find . -type f -name "*.py" -exec sed -i 's/np\.float6432/np.float32/g' {} +
+
+```
+
 ```
 nohup bash -c 'cd data && mkdir coco && cd coco && wget http://images.cocodataset.org/zips/val2017.zip' > output.log 2>&1 &
 ```
 pip freeze > requirements.txt
 
+### 换行符
+看起来你的脚本文件包含了Windows风格的换行符（`^M` 或 `\r`），这是导致错误的原因。你可以使用 `dos2unix` 来转换文件格式。试试下面的步骤：
+1. 安装 `dos2unix`（如果还未安装）：
+   ```bash
+   sudo apt-get install dos2unix
+   ```
+2. 转换文件格式：
+   ```bash
+   dos2unix train_ssl_abdominal_ct.sh
+   ```
+
+### 数据集
+
+```
+wget -c https://zenodo.org/records/5903037/files/Subtask1.zip?download=1
+wget -c https://zenodo.org/records/5903037/files/Subtask2.zip?download=1
+wget -c https://zenodo.org/records/5903037/files/TestImage.zip?download=1
+```
+
+# 环境
 - d2l 动手学深度学习3.8
 - apex tensorrt模型的环境3.7
 - fps onnx模型3.10
@@ -12,6 +41,7 @@ pip freeze > requirements.txt
 - qt，制作qfluent工具
 - side,制作qfluent工具
 - aoe，帝国脚本
+
 
 # 虚拟环境
 
