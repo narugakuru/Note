@@ -1,3 +1,8 @@
+---
+tags:
+  - linux操作
+---
+
 8'/7L,MNR# 常用工具命令
 
 # 1. ‌Termux小程序‌you-get 

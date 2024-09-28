@@ -2,6 +2,51 @@
 tags:
   - 脚本
 ---
+### 浏览器缓存
+```
+删除 Cache
+mklink /D "C:\Users\Raisei\AppData\Local\Microsoft\Edge\User Data\Default\Cache" "V:\EdgeCache"
+
+mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Default\Cache" "V:\ChromeCache"
+
+mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Default\Cache" "V:\ChromeCache"
+
+hikari账户
+mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Profile 2\Cache" "V:\ChromeCache"
+
+```
+
+下载一个叫[**RamDisk**](http://down1.tech.sina.com.cn/download/down_contents/1223740800/41149.shtml)的软件，然后安装，分配256M的内存用来做磁盘，然后修改Chrome快捷方式，在后面加上--User-data-dir=R:\UserData把Chrome的用户目录转到内存盘。效果立马出来，硬盘不再受折磨，速度又回来了。
+
+但是问题又来了，每次重启、关机内存盘都会被清空。
+这个可以通过开关机脚本来实现数据同步。
+修改开关机脚本
+开始→运行，输入gpedit.msc
+修改组策略。在 计算机配置→Windows 设置→脚本(启动/关机)
+
+```
+　　================
+
+　　开机脚本
+
+　　xcopy /E /Y /K D:\Temp\RamDisk.img\*.* R:\
+
+　　将本地硬盘中存放的用户目录拷贝到内存盘
+
+　　==================
+
+　　关机脚本
+
+　　copy /y "R:\UserData\Local State" D:\Temp\Ramdisk.img\UserData\
+
+　　copy /y R:\UserData\Default\*.* D:\Temp\Ramdisk.img\UserData\Default\
+
+　　xcopy /E /Y /K "R:\UserData\Default\Plugin Data\*.*" "D:\Temp\Ramdisk.img\UserData\Default\Plugin Data"
+
+　　将内存盘用户目录中必要的文件拷贝回本地磁盘指定目录
+
+　　==================
+```
 
 # 批量启动软件
 ```shell
