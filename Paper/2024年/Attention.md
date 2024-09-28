@@ -1,3 +1,12 @@
+---
+tags:
+  - Method
+title: Attention
+date: 2023-10-4
+NotionID-Paper: 10ee05f0-ba91-81ae-a619-d210d029e1b2
+link-Paper: https://hikari-note.notion.site/Attention-10ee05f0ba9181aea619d210d029e1b2
+---
+
 高效非局部注意力机制（Efficient Non-Local Attention Mechanism, ENLA）的计算公式是改进自传统的非局部注意力机制，以减少计算复杂度并提高效率。ENLA通过引入投影矩阵来降低维度，并采用改进的注意力计算方法。
 
 ### 传统非局部注意力机制
