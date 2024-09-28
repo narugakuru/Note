@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 ---
 tags:
   - FSCIL
   - FSS
 ---
+=======
+>>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # Survy：Few-shot Class-Incremental Learning (FSCIL)
 
 Owner: hikari

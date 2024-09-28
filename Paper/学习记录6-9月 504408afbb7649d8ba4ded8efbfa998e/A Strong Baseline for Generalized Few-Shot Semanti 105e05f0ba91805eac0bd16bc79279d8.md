@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 tags:
   - FSS
@@ -5,6 +6,8 @@ tags:
   - 框架
 ---
 
+=======
+>>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # A Strong Baseline for Generalized Few-Shot Semantic Segmentation
 
 Owner: hikari

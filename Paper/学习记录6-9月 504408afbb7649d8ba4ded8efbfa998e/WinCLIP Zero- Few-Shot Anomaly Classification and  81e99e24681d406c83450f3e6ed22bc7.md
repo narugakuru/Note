@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 ---
 tags:
   - FSS
 ---
 
+=======
+>>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation
 
 Owner: hikari

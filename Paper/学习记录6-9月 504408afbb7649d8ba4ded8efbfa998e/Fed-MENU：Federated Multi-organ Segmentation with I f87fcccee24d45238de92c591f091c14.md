@@ -1,9 +1,12 @@
+<<<<<<< HEAD
 ---
 tags:
   - Cross-domain
   - Federal
 ---
 
+=======
+>>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # Fed-MENU：Federated Multi-organ Segmentation with Inconsistent Labels
 
 Owner: hikari

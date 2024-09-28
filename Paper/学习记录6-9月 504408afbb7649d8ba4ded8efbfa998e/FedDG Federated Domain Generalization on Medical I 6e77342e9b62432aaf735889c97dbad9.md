@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 ---
 tags:
   - Federal
 ---
 
+=======
+>>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # FedDG: Federated Domain Generalization on Medical Image Segmentation via Episodic Learning in Continuous Frequency Space
 
 Owner: hikari
