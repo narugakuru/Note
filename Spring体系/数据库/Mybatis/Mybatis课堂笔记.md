@@ -1,3 +1,7 @@
+---
+tags:
+  - Mybatis
+---
 ## Mybatis-9.28
 
 环境：
@@ -23,7 +27,7 @@ SSM框架：配置文件的。  最好的方式：看官网文档；
 
 ### 1.1、什么是Mybatis
 
-![1569633932712](Mybatis课堂笔记.assets/1569633932712.png)
+![1569633932712](Spring体系/数据库/Mybatis/img/1569633932712.png)
 
 - MyBatis 是一款优秀的**持久层框架**
 - 它支持定制化 SQL、存储过程以及高级映射。
@@ -548,7 +552,7 @@ Mybatis默认的事务管理器就是 JDBC  ， 连接池 ： POOLED
 
 这些属性都是可外部配置且可动态替换的，既可以在典型的 Java 属性文件中配置，亦可通过 properties 元素的子元素来传递。【db.properties】
 
-![1569656528134](Mybatis课堂笔记.assets/1569656528134.png)
+![1569656528134](Spring体系/数据库/Mybatis/img/1569656528134.png)
 
 编写一个配置文件
 
@@ -618,9 +622,9 @@ public class User {}
 
 这是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。 
 
-![1569657659080](Mybatis课堂笔记.assets/1569657659080.png)
+![1569657659080](Spring体系/数据库/Mybatis/img/1569657659080.png)
 
-![1569657672791](Mybatis课堂笔记.assets/1569657672791.png)
+![1569657672791](Spring体系/数据库/Mybatis/img/1569657672791.png)
 
 ### 6、其他配置
 
@@ -686,7 +690,7 @@ MapperRegistry：注册绑定我们的Mapper文件；
 
 ### 8、生命周期和作用域
 
-![1569660357745](Mybatis课堂笔记.assets/1569660357745.png)
+![1569660357745](Spring体系/数据库/Mybatis/img/1569660357745.png)
 
 生命周期，和作用域，是至关重要的，因为错误的使用会导致非常严重的**并发问题**。
 
@@ -708,7 +712,7 @@ MapperRegistry：注册绑定我们的Mapper文件；
 - SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域。
 - 用完之后需要赶紧关闭，否则资源被占用！
 
-![1569660737088](Mybatis课堂笔记.assets/1569660737088.png)
+![1569660737088](Spring体系/数据库/Mybatis/img/1569660737088.png)
 
 这里面的每一个Mapper，就代表一个具体的业务！
 
@@ -720,7 +724,7 @@ MapperRegistry：注册绑定我们的Mapper文件；
 
 数据库中的字段
 
-![1569660831076](Mybatis课堂笔记.assets/1569660831076.png)
+![1569660831076](Spring体系/数据库/Mybatis/img/1569660831076.png)
 
 新建一个项目，拷贝之前的，测试实体类字段不一致的情况
 
@@ -735,7 +739,7 @@ public class User {
 
 测试出现问题
 
-![1569661145806](Mybatis课堂笔记.assets/1569661145806.png)
+![1569661145806](Spring体系/数据库/Mybatis/img/1569661145806.png)
 
 
 
@@ -801,7 +805,7 @@ id   name   password
 
 现在：日志工厂！
 
-![1569892155104](Mybatis课堂笔记.assets/1569892155104.png)
+![1569892155104](Spring体系/数据库/Mybatis/img/1569892155104.png)
 
 - SLF4J 
 
@@ -826,7 +830,7 @@ id   name   password
 </settings>
 ```
 
-![1569892595060](Mybatis课堂笔记.assets/1569892595060.png)
+![1569892595060](Spring体系/数据库/Mybatis/img/1569892595060.png)
 
 
 
@@ -891,7 +895,7 @@ id   name   password
 
 4. Log4j的使用！，直接测试运行刚才的查询
 
-   ![1569893505842](Mybatis课堂笔记.assets/1569893505842.png)
+   ![1569893505842](Spring体系/数据库/Mybatis/img/1569893505842.png)
 
 
 
@@ -1019,7 +1023,7 @@ SELECT * from user limit 3;  #[0,n]
 
 ### 7.3、分页插件
 
-![1569896603103](Mybatis课堂笔记.assets/1569896603103.png)
+![1569896603103](Spring体系/数据库/Mybatis/img/1569896603103.png)
 
 了解即可，万一 以后公司的架构师，说要使用，你需要知道它是什么东西！
 
@@ -1079,13 +1083,13 @@ SELECT * from user limit 3;  #[0,n]
 
 底层：动态代理！
 
- ![1569898830704](Mybatis课堂笔记.assets/1569898830704.png)
+ ![1569898830704](Spring体系/数据库/Mybatis/img/1569898830704.png)
 
 
 
 **Mybatis详细的执行流程！**
 
-![1569898830704](Mybatis课堂笔记.assets/Temp.png)
+![1569898830704](Spring体系/数据库/Mybatis/img/Temp.png)
 
 
 
@@ -1222,13 +1226,13 @@ Never write another getter or equals method again, with one annotation your clas
 
 多对一：
 
-![1569909163944](Mybatis课堂笔记.assets/1569909163944.png)
+![1569909163944](Spring体系/数据库/Mybatis/img/1569909163944.png)
 
 - 多个学生，对应一个老师
 - 对于学生这边而言，  **关联** ..  多个学生，关联一个老师  【多对一】
 - 对于老师而言， **集合** ， 一个老师，有很多学生 【一对多】
 
-![1569909422471](Mybatis课堂笔记.assets/1569909422471.png)
+![1569909422471](Spring体系/数据库/Mybatis/img/1569909422471.png)
 
 SQL：
 
@@ -1635,9 +1639,9 @@ select * from user where 1=1 and
 
 ```
 
-![1569979229205](Mybatis课堂笔记.assets/1569979229205.png)
+![1569979229205](Spring体系/数据库/Mybatis/img/1569979229205.png)
 
-![1569979339190](Mybatis课堂笔记.assets/1569979339190.png)
+![1569979339190](Spring体系/数据库/Mybatis/img/1569979339190.png)
 
 ```xml
 <!--
@@ -1719,7 +1723,7 @@ select * from user where 1=1 and
 2. 测试在一个Sesion中查询两次相同记录
 3. 查看日志输出
 
-![1569983650437](Mybatis课堂笔记.assets/1569983650437.png)
+![1569983650437](Spring体系/数据库/Mybatis/img/1569983650437.png)
 
 
 
@@ -1729,13 +1733,13 @@ select * from user where 1=1 and
 
 2. 增删改操作，可能会改变原来的数据，所以必定会刷新缓存！
 
-   ![1569983952321](Mybatis课堂笔记.assets/1569983952321.png)
+   ![1569983952321](Spring体系/数据库/Mybatis/img/1569983952321.png)
 
 3. 查询不同的Mapper.xml
 
 4. 手动清理缓存！
 
-   ![1569984008824](Mybatis课堂笔记.assets/1569984008824.png)
+   ![1569984008824](Spring体系/数据库/Mybatis/img/1569984008824.png)
 
 
 
@@ -1806,7 +1810,7 @@ select * from user where 1=1 and
 
 ### 13.5、缓存原理
 
-![1569985541106](Mybatis课堂笔记.assets/1569985541106.png)
+![1569985541106](Spring体系/数据库/Mybatis/img/1569985541106.png)
 
 
 

@@ -1,3 +1,7 @@
+---
+tags:
+  - Mybatis
+---
 # Mybatis-02
 
 ## 1. 注解开发

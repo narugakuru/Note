@@ -1,13 +1,10 @@
-<<<<<<< HEAD
 ---
 tags:
   - FSS
-  - Data-Enhancement
   - 框架
+  - Data-Augmentation
 ---
 
-=======
->>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # Label Anything：Multi-Class Few-Shot Semantic Segmentation with Visual Prompts
 
 Owner: hikari

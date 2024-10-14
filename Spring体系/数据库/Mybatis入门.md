@@ -1,3 +1,9 @@
+---
+tags:
+  - Mybatis
+  - Mysql
+---
+
 # Mybatis入门
 
 ## 前言

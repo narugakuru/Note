@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 ---
 tags:
   - Cross-domain
   - FSS
 ---
 
-=======
->>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # StyleAdv: Meta Style Adversarial Training for Cross-Domain Few-Shot Learning
 
 Owner: hikari

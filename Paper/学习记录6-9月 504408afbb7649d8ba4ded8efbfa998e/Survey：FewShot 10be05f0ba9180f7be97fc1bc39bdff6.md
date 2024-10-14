@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 ---
 tags:
   - Survey
   - FSS
 ---
 
-=======
->>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # Survey：FewShot
 
 Owner: hikari

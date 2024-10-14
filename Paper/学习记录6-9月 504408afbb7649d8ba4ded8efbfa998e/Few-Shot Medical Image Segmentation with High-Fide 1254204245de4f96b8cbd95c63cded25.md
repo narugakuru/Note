@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 ---
 tags:
   - FSS
   - Prototypes
 ---
 
-=======
->>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # Few-Shot Medical Image Segmentation with High-Fidelity Prototypes
 
 Owner: hikari

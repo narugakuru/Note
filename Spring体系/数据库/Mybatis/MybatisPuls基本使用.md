@@ -1,3 +1,7 @@
+---
+tags:
+  - Mybatis
+---
 Adblocker
 
 [![语雀](https://gw.alipayobjects.com/zos/rmsportal/XuVpGqBFxXplzvLjJBZB.svg)](https://www.yuque.com/)

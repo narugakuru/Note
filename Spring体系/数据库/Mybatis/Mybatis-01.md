@@ -1,3 +1,8 @@
+---
+tags:
+  - Mybatis
+---
+
 # Mybatis-01
 
 ## 1. 框架
@@ -137,7 +142,6 @@ public interface UserDao {
 
 ### 4.1. 配置代码模板
 
-![image-20210218211942452](img\image-1.png)
 
 ### 4.2. Mybatis插件
 

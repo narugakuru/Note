@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 ---
 tags:
   - FSS
-  - Data-Enhancement
+  - Data-Augmentation
 ---
 
-=======
->>>>>>> 516cbd4495f625d0ca6b3b21239e3652645bffc2
 # Self-Prompting Large Vision Models for Few-Shot Medical Image Segmentation
 
 Owner: hikari

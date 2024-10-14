@@ -5,6 +5,6 @@
 - [csv批量规则数据生成](开发Script/csv批量规则数据生成.md)
 - [CsvExcel](开发Script/CsvExcel.md)
 - [FluentDemo](开发Script/FluentDemo.md)
-- [LabelAnything](开发Script/LabelAnything.md)
+- [LabelAnything实验](Paper/学习记录6-9月%20504408afbb7649d8ba4ded8efbfa998e/LabelAnything实验.md)
 - [Nuitka](开发Script/Nuitka.md)
 - [table_extrat](开发Script/table_extrat.md)
