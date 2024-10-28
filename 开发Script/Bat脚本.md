@@ -12,7 +12,7 @@ mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Default\Cache" 
 mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Default\Cache" "V:\ChromeCache"
 
 hikari账户
-mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Profile 2\Cache" "V:\ChromeCache"
+mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Profile 2\Cache" "V:\ChromeCache2"
 
 ```
 
