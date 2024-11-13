@@ -3,12 +3,166 @@ title: PyScript
 tags:
   - 
 date created: 2024-10-17
-date modified: 2024-10-21
+date modified: 2024-11-11
 ---
+[[开发/ws接口实时传输日志]]
+
+[Claude-3.5-sonnet new+Cline+Continue打造最强编程智能体！玩转全自动编程,发各种复杂应用，轻松修改代码、优化代码、添加注,小白也能开发各种app！#claude](https://blog.stoeng.site/20241024.html)
+
+
+# PDF处理
+
 # Pyinstaller打包
 
 https://cloud.tencent.com/developer/article/1630758
 https://blog.csdn.net/weixin_41916986/article/details/122342035
+
+# 项目结构
+
+```
+/project_root
+├── client/                    # 前端部分
+│   ├── __pycache__/           # 编译缓存
+│   ├── build/                 # 构建输出
+│   ├── dist/                  # 项目分发文件
+│   ├── node_modules/          # NPM 依赖
+│   ├── public/                # 静态文件
+│   ├── src/                   # 源代码
+│   │   ├── assets/            # 资源文件
+│   │   ├── components/        # Vue 组件
+│   │   ├── composables/       # 组合式 API
+│   │   ├── router/            # 路由配置
+│   │   ├── styles/            # 样式文件
+│   │   └── view/              # 视图组件
+│   ├── .gitignore             # Git 忽略文件
+│   ├── .npmrc                 # NPM 配置
+│   ├── index.html             # 入口 HTML 文件
+│   ├── package.json           # NPM 项目配置
+│   ├── README.md              # 项目说明
+│   └── vite.config.ts         # Vite 配置
+│
+├── resource/                  # 资源文件夹
+│
+└── server/                    # 后端 FastAPI 部分
+│    ├── api/                   # API 路由和业务逻辑
+│    ├── component/             # 组件
+│    ├── schemas/               # 数据模式定义
+│    ├── scripts/               # 脚本
+│    ├── utils/                 # 工具类
+│    ├── config.py              # 配置文件
+│    └── main.py                # FastAPI 入口
+│
+├── app-dev.py                 # 开发环境配置
+├── app.py                     # 主应用文件
+├── app.spec                   # 应用规格
+├── demo.py                    # 示例代码
+├── monitor.py                 # 监控工具
+├── requirements.txt           # Python 依赖
+├── server.py                  # 服务器启动文件
+└── start_app.bat             # 启动脚本
+
+```
+
+# 项目要求
+
+我想做一个本地工具库，使用vue作为前端界面，pywebview将前端界面打包，后端是fastapi。前端界面比较简单，后端主要核心功能是开发过程中会用到的大量的python脚本，我希望可以很方便的传参数调用这些脚本所以写这个工具
+前端网页表单属性以json格式存放在文件里，以script_name作为索引，获取表单参数
+现在的问题：设计组件，通过传入参数script_name索引的方式来构建form，你有哪些实现方案
+```
+{
+    "script_list": {
+        "copy_list": {
+            "form_fields": [
+                {
+                    "label": "源文件夹路径",
+                    "model": "origin_path",
+                    "type": "input",
+                    "placeholder": "请输入源文件夹路径"
+                },
+                {
+                    "label": "目标文件夹路径",
+                    "model": "copy_path",
+                    "type": "input",
+                    "placeholder": "请输入目标文件夹路径"
+                },
+                {
+                    "label": "文件列表",
+                    "model": "file_list",
+                    "type": "textarea",
+                    "placeholder": "请输入文件列表，每行一个文件路径",
+                    "rows": 10
+                }
+            ]
+        }
+    }
+}
+```
+
+![](开发/attachments/Pasted%20image%2020241104221314.png)
+```
+======== 指定获取脚本logger名称：copy_list =========  
+2024-11-04 22:15:35,395 - copy_list - INFO - ======== run_script : copy_list ==========  
+========= execute_script: copy_list==========  
++-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+  
+| 参数名 | 值  
+|  
++=======+===============================================================================================================================================================================================+  
+| 参数 0 | copy_list  
+|  
++-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+  
+| 参数 1 | {'origin_path': 'E:/WorkSpace/WebKaisyu/ssl-htdocs-local', 'copy_path': 'E:/WorkSpace/WebKaisyu/html_11', 'file_list': ['effort/content.html', 'effort/content.html', 'effort/content.html']} |  
++-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+  
+========== run! ： copy_list ===========  
+2024-11-04 22:15:35,396 - copy_list - INFO - ====== copy_files_with_structure =======  
+copy folder from E:/WorkSpace/WebKaisyu/ssl-htdocs-local to E:/WorkSpace/WebKaisyu/html_11  
+=======websocket开始发送消息 =====  
+DEBUG: > TEXT '2024-11-04 22:15:35,395 - INFO - ======== run_s... : copy_list ==========' [75 bytes]  
+=======websocket开始发送消息 =====  
+DEBUG: > TEXT '2024-11-04 22:15:35,396 - INFO - ====== copy_files_with_structure =======' [73 bytes]  
+2024-11-04 22:15:35,401 - copy_list - INFO -  
+Copied: E:/WorkSpace/WebKaisyu/ssl-htdocs-local\effort/content.html -> E:/WorkSpace/WebKaisyu/html_11\effort/content.html  
+=======websocket开始发送消息 =====  
+DEBUG: > TEXT '2024-11-04 22:15:35,401 - INFO - \nCopied: E:/W...11\\effort/content.html' [155 bytes]  
+2024-11-04 22:15:35,404 - copy_list - INFO -  
+Copied: E:/WorkSpace/WebKaisyu/ssl-htdocs-local\effort/content.html -> E:/WorkSpace/WebKaisyu/html_11\effort/content.html  
+=======websocket开始发送消息 =====  
+DEBUG: > TEXT '2024-11-04 22:15:35,404 - INFO - \nCopied: E:/W...11\\effort/content.html' [155 bytes]  
+2024-11-04 22:15:35,406 - copy_list - INFO -  
+Copied: E:/WorkSpace/WebKaisyu/ssl-htdocs-local\effort/content.html -> E:/WorkSpace/WebKaisyu/html_11\effort/content.html  
+2024-11-04 22:15:35,407 - copy_list - INFO - Script completed: copy_list  
+2024-11-04 22:15:35,407 - copy_list - INFO - Result: True  
+2024-11-04 22:15:35,407 - copy_list - INFO -  
+  
+================================================================================
+```
+![](开发/attachments/Pasted%20image%2020241104221318.png)
+```
+======== 指定获取脚本logger名称：copy_list =========  
+2024-11-04 22:15:18,119 - copy_list - INFO - Setting up stream logger: copy_list  
+====== 初始化日志Handler: copy_list =======  
+2024-11-04 22:15:18,119 - copy_list - INFO - ======== run_script : copy_list ==========  
+========= execute_script: copy_list==========  
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+  
+| 参数名 | 值 |  
++=======+====================================================================================================================================================================+  
+| 参数 0 | copy_list |  
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+  
+| 参数 1 | {'origin_path': 'E:/WorkSpace/WebKaisyu/ssl-htdocs-local', 'copy_path': 'E:/WorkSpace/WebKaisyu/html_11', 'file_list': 'effort/content.html\neffort/content.html'} |  
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+  
+========== run! ： copy_list ===========  
+2024-11-04 22:15:18,130 - copy_list - INFO - ====== copy_files_with_structure =======  
+2024-11-04 22:15:18,130 - copy_list - INFO - ====== file_list is normalizing! ======  
+2024-11-04 22:15:18,130 - copy_list - ERROR - Error in run: object list can't be used in 'await' expression  
+2024-11-04 22:15:18,130 - copy_list - INFO - Script completed: copy_list  
+2024-11-04 22:15:18,130 - copy_list - INFO - Result: object list can't be used in 'await' expression  
+2024-11-04 22:15:18,130 - copy_list - INFO -  
+  
+================================================================================  
+  
+  
+INFO: 127.0.0.1:16333 - "POST /api/script/copy_list HTTP/1.1" 200 OK
+
+```
 
 # 路由bug
 
@@ -379,12 +533,10 @@ db_file = resource_path("db/database.db")
 ### 1. 项目结构
 
 ```bash
-/my_vue_fastapi_pywebview_project
-├── backend/                    # 后端 FastAPI 部分
+/fastapi
+├── server/                    # 后端 FastAPI 部分
 │   ├── main.py                 # FastAPI 入口
 │   ├── api/                    # API 路由和业务逻辑
-│   │   ├── crud.py             # 数据库操作 (CRUD)
-│   │   └── routes.py           # FastAPI 路由
 │   ├── models/                 # 数据库模型
 │   ├── db.py                   # 数据库连接配置
 │   └── utils/                  # 工具类（处理异步操作等）

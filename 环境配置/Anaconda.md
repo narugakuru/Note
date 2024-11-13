@@ -1,7 +1,29 @@
+---
+title: Anaconda
+tags:
+date created: 2023-03-21
+date modified: 2024-11-07
+---
+
+### Vim
+
+```
+
+pip install torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu118
+
+pip install -r vim/vim_requirements.txt
+
+https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip --trusted-host pypi.tuna.tsinghua.edu.cn install torch==1.10.1+cu102 torchvision==0.11.2+cu102 torchaudio==0.10.1 -f https://download.pytorch.org/whl/torch_stable.html
+```
 
 # DSPNet
+
 2cFrWIS4y9EM
+
 ### numpy
+
 ```
 find . -type f -name "*.py" -exec sed -i 's/np\.float/np.float64/g' {} +
 find . -type f -name "*.py" -exec sed -i 's/np\.float6432/np.float32/g' {} +
@@ -14,6 +36,7 @@ nohup bash -c 'cd data && mkdir coco && cd coco && wget http://images.cocodatase
 pip freeze > requirements.txt
 
 ### 换行符
+
 看起来你的脚本文件包含了Windows风格的换行符（`^M` 或 `\r`），这是导致错误的原因。你可以使用 `dos2unix` 来转换文件格式。试试下面的步骤：
 1. 安装 `dos2unix`（如果还未安装）：
    ```bash
@@ -33,6 +56,7 @@ wget -c https://zenodo.org/records/5903037/files/TestImage.zip?download=1
 ```
 
 # 环境
+
 - d2l 动手学深度学习3.8
 - apex tensorrt模型的环境3.7
 - fps onnx模型3.10
@@ -42,7 +66,6 @@ wget -c https://zenodo.org/records/5903037/files/TestImage.zip?download=1
 - qt，制作qfluent工具
 - side,制作qfluent工具
 - aoe，帝国脚本
-
 
 # 虚拟环境
 
@@ -57,7 +80,9 @@ conda create --name dsp python=3.8 -y
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 
 ```
+
 ### fluent
+
 conda create --name qt python=3.10.14 -y
 
 ### vit
@@ -65,7 +90,6 @@ conda create --name qt python=3.10.14 -y
 [【pytorch】Vision Transformer实现图像分类+可视化+训练数据保存_vision transformer训练自己的数据-CSDN博客](https://blog.csdn.net/weixin_51331359/article/details/124514770)
 
 [从零开始手把手搭建Vision Transformers(Pytorch版本) (qq.com)](https://mp.weixin.qq.com/s?__biz=MzU3ODk2Njc5Mg==&mid=2247492959&idx=1&sn=13a39fb0dbf826fe02b563c2ec71eafb&chksm=fd6fe138ca18682e13c3361f6d530e3d27ea4aeea73615940185188d7bc06905aee17020ae24&token=1443126529&lang=zh_CN#rd)
-
 
 ```
 pip install lightning=2.1 对应torch2.1以下
