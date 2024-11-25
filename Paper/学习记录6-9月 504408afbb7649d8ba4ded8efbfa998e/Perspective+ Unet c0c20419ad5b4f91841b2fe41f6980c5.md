@@ -1,7 +1,7 @@
 ---
 tags:
-  - Model-Architecture
   - Feature-Fusion
+  - Framework
 ---
 # Perspective+ Unet
 

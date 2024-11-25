@@ -1,8 +1,20 @@
 ---
+title: Bat脚本
 tags:
   - 脚本
+date created: 2023-03-22
+date modified: 2024-11-22
 ---
+
+### 管理网络驱动器
+
+```
+net use Z: \\192.168.2.57\share /user:share HL2024
+net use Z: /delete
+```
+
 ### 浏览器缓存
+
 ```
 删除 Cache
 mklink /D "C:\Users\Raisei\AppData\Local\Microsoft\Edge\User Data\Default\Cache" "V:\EdgeCache"
@@ -49,6 +61,7 @@ mklink /D "C:\Users\Raisei\AppData\Local\Google\Chrome\User Data\Profile 2\Cache
 ```
 
 # 批量启动软件
+
 ```shell
 @echo off
 start "" "E:\ProgramFileCode\Apifox\Apifox.exe"
@@ -60,11 +73,13 @@ start "" "C:\Users\Raisei\AppData\Local\Obsidian\Obsidian.exe"
 ```
 
 # 清除DNS缓存
+
 ```js
 ipconfig /flushdns
 ```
 
 # 单个调试
+
 ```shell
 @echo off
 Setlocal enabledelayedexpansion
@@ -120,6 +135,7 @@ powershell -command "& {Add-Type -AssemblyName System.IO.Compression.FileSystem;
 ```
 
 # 批量解压复制创意工坊
+
 该脚本会遍历 `data` 目录下的所有子目录，检查每个子目录中是否存在 zip 文件。如果存在，则创建 `output` 目录，将 pkg 文件解压到 `output` 目录，复制其中的 jpg 文件到 `img` 目录，然后删除 `output` 目录。
 
 ```shell
@@ -157,9 +173,9 @@ pause
 ```
 
 # Bat的变量引用
+
 谜一般的变量引用，在setlocal enabledelayedexpansion的前提下
 单个循环里使用\%%正常引用，嵌套循环则需使用！！
-
 
 # 解析单个PKG文件
 
@@ -184,11 +200,12 @@ pause
 ```
 
 # Clash端口号为0
+
 网络上大家对于这个问题出现的原因分析，大多是说系统更新后，由于使用了`Hyper-V`的功能，虚拟机需要映射一部分端口，并且在系统更新后对动态映射的端口范围进行了更改，导致占用了本来的`Clash`使用的端口。所以为了解决这个问题，
 
--   要么直接关闭`Hyper-V`。（怎么可能，`WSL`不用了？）
--   要么修改系统动态映射的端口范围。（我觉得还是不要动系统层面的设置，免得又出问题。）
--   要么对`Clash`使用的代理端口进行修改，改为不被系统占用的端口即可。（Nice！）
+- 要么直接关闭`Hyper-V`。（怎么可能，`WSL`不用了？）
+- 要么修改系统动态映射的端口范围。（我觉得还是不要动系统层面的设置，免得又出问题。）
+- 要么对`Clash`使用的代理端口进行修改，改为不被系统占用的端口即可。（Nice！）
 
 使用命令查看被系统排除在可用范围外的端口：
 
@@ -197,6 +214,7 @@ netsh interface ipv4 show excludedportrange protocol=tcp
 ```
 
 # 替换图床服务器
+
 接下来，运行下面这段 java 脚本，替换所有md文件的图床服务器前缀
 ```java
 //作者：数码科技宅  
@@ -299,8 +317,8 @@ public class ChangePicPath {
 }
 ```
 
-
 # 隐藏窗口启动
+
 ```shell
 if "%1"=="hide" goto CmdBegin
 start mshta vbscript:createobject("wscript.shell").run("""%~0"" hide",0)(window.close)&&exit
@@ -310,6 +328,7 @@ java -jar kiftd-1.1.0-RELEASE.jar > log.txt
 ```
 
 # 批量移动文件
+
 ```shell
 @echo off
 for /r %%a in (正则表达式) do (
@@ -318,14 +337,15 @@ move "%%a" "%cd%"
 )
 pause
 ```
-- /r        递归扫描当前文件夹及其子文件夹
-- \%%a  临时变量，当前指向的文件路径
+- /r 递归扫描当前文件夹及其子文件夹
+- \%%a 临时变量，当前指向的文件路径
 - in（） 条件，对满足此条件的文件执行后边的 do 里的内容
 - do 执行移动操作，这里边还用 echo 做了个输出，可有可无
-- move  source  target  移动操作，这里注意，这两个地址中不能包含空格，如果有，要像代码中用引号把这两个变量括起来。
-- %cd%  只当前目录，也就是这个bat文件所在的目录
+- move source target 移动操作，这里注意，这两个地址中不能包含空格，如果有，要像代码中用引号把这两个变量括起来。
+- %cd% 只当前目录，也就是这个bat文件所在的目录
 
 # 复制文件夹
+
 以下是一个可用的示例脚本，可以将指定文件夹下的所有jpg、png和zip文件复制到另一个目录中：
 
 ```shell
@@ -341,7 +361,6 @@ echo Files copied successfully.
 pause
 ```
 
-
 请注意，您需要将“source_folder”和“destination_folder”替换为实际的文件夹路径。此脚本使用xcopy命令来复制文件，并使用/s选项来包括子文件夹，/y选项来覆盖目标文件夹中的任何现有文件。最后，脚本会输出一条消息，指示文件已成功复制，并等待用户按任意键以关闭窗口。
 
 # xcopy
@@ -353,7 +372,6 @@ copy命令只能复制单个文件，而xcopy命令可以复制整个文件夹�
 另外，xcopy命令有更多的选项和参数可用于更精确地控制复制过程，例如/s选项用于包括子文件夹，/d选项用于仅复制源文件夹中更新的文件，/c选项用于继续复制即使发生错误等等。
 
 总之，如果您需要复制整个文件夹或需要更高级的选项和参数，则应使用xcopy命令。如果您只需要复制单个文件，则可以使用copy命令。
-
 
 # 删除空的文件夹
 
@@ -371,6 +389,7 @@ pause
 ```
 
 # 开启热点
+
 ```shell
 netsh wlan set hostednetwork mode=allow ssid=ThinkBook16P key=17679395638
 
@@ -445,10 +464,10 @@ WshShell.Run """C:\Users\Raisei\AppData\Local\Obsidian\Obsidian.exe""", 0, False
 
 ```
 
-
 # shell
 
 ## 1. 批量复制
+
 以下是一个可用的shell脚本示例，可以将指定文件夹下的所有jpg、png和zip文件复制到另一个目录中：
 
 ```shell

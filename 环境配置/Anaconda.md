@@ -1,9 +1,14 @@
 ---
 title: Anaconda
 tags:
+  - 
 date created: 2023-03-21
-date modified: 2024-11-07
+date modified: 2024-11-20
 ---
+
+### NABirds数据集
+
+https://www.dropbox.com/scl/fi/yas70u9uzkeyzrmrfwcru/nabirds.tar.gz?e=1&n=13142758&oref=e&rlkey=vh0uduhckom5jyp73igjugqtr&submissionGuid=4c902ca4-854c-4057-a59c-a9144baa3e7c
 
 ### Vim
 
@@ -69,6 +74,17 @@ wget -c https://zenodo.org/records/5903037/files/TestImage.zip?download=1
 
 # 虚拟环境
 
+```
+# CUDA 11.8
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+# CPU only
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cpu
+```
+
+### CATNet
+
+conda create --name CATNet python=3.10 -y
+
 [download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
 
 ```
@@ -78,6 +94,11 @@ torch安装
 conda create --name dsp python=3.8 -y
 
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+
+torch==2.0.1+cu118  
+torchvision==0.15.2+cu118
+
+pip install torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
 
 ```
 

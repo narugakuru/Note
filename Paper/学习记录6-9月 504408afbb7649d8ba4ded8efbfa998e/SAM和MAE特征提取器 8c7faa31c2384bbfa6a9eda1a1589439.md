@@ -1,6 +1,6 @@
 ---
 tags:
-  - Model-Architecture
+  - Framework
 ---
 # SAM和MAE特征提取器
 
