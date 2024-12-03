@@ -2,7 +2,7 @@
 python -m nuitka --onefile --output-dir=app --mingw64 --lto=yes --enable-plugin=pyside6 --show-progress --show-memory --follow-imports --assume-yes-for-downloads --include-qt-plugins=sensible,qml,styles,sqldrivers --windows-icon-from-ico=.\resource\logo.png --company-name="小岚岚有限公司" --product-name="IT Tools" --file-version=2.3.0.0 --product-version=2.3.0.0 --file-description="IT Tools by 小岚岚 hikari021004@gmail.com" --copyright="© 2024 Hikari" --trademarks="Hikari Trademark" --nofollow-import-to=numpy --windows-disable-console app.py
 ```
 
-![](%E5%BC%80%E5%8F%91Script/attachments/Pasted%20image%2020240813193705.png)
+![](开发Script/attachments/Nuitka.png)
 
 nuitka --plugin-list
 

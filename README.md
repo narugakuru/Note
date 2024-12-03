@@ -37,3 +37,18 @@ git push -u origin "master"
 ```shell
 git clone git@gitee.com:diaborosu/note.git
 ```
+
+
+![]()
+
+加载个人及系统配置文件用了 2790 毫秒。  
+(base) PS E:\Note\Paper\2024年\attachments> picgo upload Pasted image 20241128103941.png  
+[PicGo WARN]: E:\Note\Paper\2024年\attachments\Pasted does not exist.  
+[PicGo WARN]: E:\Note\Paper\2024年\attachments\image does not exist.  
+[PicGo WARN]: E:\Note\Paper\2024年\attachments\20241128103941.png does not exist.  
+[PicGo ERROR]: Error: image not found in clipboard  
+at $t.upload (E:\Environment\node-v18.20.4\node_modules\picgo\dist\index.cjs.js:1:75025)  
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)  
+at async E:\Environment\node-v18.20.4\node_modules\picgo\dist\index.cjs.js:1:5821  
+(base) PS E:\Note\Paper\2024年\attachments>
+

@@ -98,7 +98,7 @@ https://blog.csdn.net/weixin_41916986/article/details/122342035
 }
 ```
 
-![](开发/attachments/Pasted%20image%2020241104221314.png)
+![](开发/attachments/PyScript.png)
 ```
 ======== 指定获取脚本logger名称：copy_list =========  
 2024-11-04 22:15:35,395 - copy_list - INFO - ======== run_script : copy_list ==========  
@@ -135,7 +135,7 @@ Copied: E:/WorkSpace/WebKaisyu/ssl-htdocs-local\effort/content.html -> E:/WorkSp
   
 ================================================================================
 ```
-![](开发/attachments/Pasted%20image%2020241104221318.png)
+![](开发/attachments/PyScript-1.png)
 ```
 ======== 指定获取脚本logger名称：copy_list =========  
 2024-11-04 22:15:18,119 - copy_list - INFO - Setting up stream logger: copy_list  
