@@ -3,12 +3,98 @@ title: Anaconda
 tags:
   - 
 date created: 2023-03-21
-date modified: 2024-11-20
+date modified: 2024-11-29
 ---
+[python多个虚拟环境需要共用一个包，怎么避免重复安装_pytorch是需要在不同的虚拟环境下重复安装嘛-CSDN博客](https://blog.csdn.net/Sallee001/article/details/127799088)
+
+# 共享软件包
+
+![](环境配置/attachments/Pasted%20image%2020241129152334.png)
+
+```
+$dirList =
+    "functorch",
+    "torch",
+    "torchgen",
+    "torchaudio",
+    "torchvision",
+    "doclayout_yolo",
+    "pdf2zh",
+    "thop"
+
+$linkPath = "E:\Environment\anaconda3\envs\CATNet\Lib\site-packages\"		
+#这里写新环境的site-packages路径
+$RealPath = "E:\Environment\anaconda3\envs\commontorch\Lib\site-packages\"	
+#这里写原环境的site-packages路径
+
+for($i = 0; $i -lt $dirList.Count; $i++)
+{
+  $linkFullPath = $linkPath+$dirList[$i]
+  $realFullPath = $realPath+$dirList[$i]
+  New-Item -ItemType SymbolicLink -Path $linkFullPath -Target $realFullPath
+}
+
+```
+
+### 复制环境
+
+```
+conda create --name commontorch python=3.10 -y
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+pip install opencv sacred SimpleITK jupyter
+将 `torch=2.0.1` 标记为禁止更新的软件包。
+conda config --add pinned_packages pytorch=2.0.1
+conda config --add pinned_packages torchvision=0.15.2
+导出备份
+pip freeze > commontorch.txt
+移除
+conda remove -n  CATNet --all
+克隆环境软链接
+conda create --name CATNet --clone commontorch
+
+
+bzip2-1.0.8-h2bbff1b_6  
+ca-certificates-2024.9.24-haa95532_0  
+json5-0.8.5-py_0  
+libffi-3.4.4-hd77b12b_1  
+openssl-3.0.15-h827c3e9_0  
+pip-24.2-py310haa95532_0  
+python-3.10.15-h4607a30_1  
+setuptools-75.1.0-py310haa95532_0  
+sqlite-3.45.3-h2bbff1b_0  
+tk-8.6.14-h0416ee5_0  
+tzdata-2024b-h04d1e81_0  
+vc-14.40-h2eaa2aa_1  
+vs2015_runtime-14.40.33807-h98bb1dd_1  
+wheel-0.44.0-py310haa95532_0  
+xz-5.4.6-h8cc25b3_1  
+zlib-1.2.13-h8cc25b3_1
+```
 
 ### NABirds数据集
 
 https://www.dropbox.com/scl/fi/yas70u9uzkeyzrmrfwcru/nabirds.tar.gz?e=1&n=13142758&oref=e&rlkey=vh0uduhckom5jyp73igjugqtr&submissionGuid=4c902ca4-854c-4057-a59c-a9144baa3e7c
+
+### CATNet
+
+conda create --name CATNet python=3.10 -y
+
+[download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
+
+```
+torch安装
+
+conda create --name dsp python=3.8 -y
+
+pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+
+torch==2.0.1+cu118  
+torchvision==0.15.2+cu118
+cudatoolkit=11.8
+
+pip install torch==2.0.1 torchvision==0.15.2 cudatoolkit=11.8 --index-url https://download.pytorch.org/whl/cu118
+
+```
 
 ### Vim
 
@@ -21,6 +107,16 @@ pip install -r vim/vim_requirements.txt
 https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip --trusted-host pypi.tuna.tsinghua.edu.cn install torch==1.10.1+cu102 torchvision==0.11.2+cu102 torchaudio==0.10.1 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+### fps
+
+```python
+conda create --name fps python=3.10 -y
+
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+pip install mss
 ```
 
 # DSPNet
@@ -79,27 +175,6 @@ wget -c https://zenodo.org/records/5903037/files/TestImage.zip?download=1
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 # CPU only
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cpu
-```
-
-### CATNet
-
-conda create --name CATNet python=3.10 -y
-
-[download.pytorch.org/whl/torch_stable.html](https://download.pytorch.org/whl/torch_stable.html)
-
-```
-torch安装
-
-
-conda create --name dsp python=3.8 -y
-
-pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
-
-torch==2.0.1+cu118  
-torchvision==0.15.2+cu118
-
-pip install torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
-
 ```
 
 ### fluent
@@ -175,16 +250,6 @@ conda create --name tf python=3.8 -y
 pip install d2l
 pip install keras seaborn openpyxl lxrd scikit-learn
 pip install tensorflow
-```
-
-### fps
-
-```python
-conda create --name fps python=3.10 -y
-
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-
-pip install mss
 ```
 
 # 环境管理

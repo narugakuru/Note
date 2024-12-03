@@ -60,7 +60,125 @@ date modified: 2024-10-22
 功能需求：设计一个URL短链接系统，用户可以输入一个长URL，系统生成一个唯一的短URL。还需要提供将短URL还原为长URL的功能。
 编程语言不限，选择你觉得最合适的语言和技术框架
 
-## 4o半价
+## 4o-2411
+
+
+设计一个简单的 URL 短链接系统涉及多个步骤，例如 URL 存储、唯一短码的生成以及短链接的解码映射。以下是一个基于 Python 使用 Flask 框架的实现方案，搭配 Redis（作为存储）或内存字典用于存储映射关系。
+
+### 技术选型
+1. **编程语言**：Python
+   - 理由：开发高效、社区支持强大，适合实现此类快速开发需求。
+2. **技术框架**：Flask
+   - 理由：轻量级、简单易用的 Web 框架，适合小型工具系统。
+3. **数据库**：Redis 或内存字典
+   - Redis：简单可靠的 key-value 存储，性能高，支持过期时间等特性。
+
+### 功能设计
+- **生成短链接**：
+  - 用户提交一个长 URL 后，系统生成一个短码（自动避免重复）并存储映射关系。
+  - 短码可以通过哈希算法或计数器生成。
+- **还原长链接**：
+  - 根据用户提交的短 URL 短码，通过映射找到对应的长链接并返回。
+- **高效存储和查询**：
+  - 对于查找过程，使用 Redis 或内存字典来高效实现短码与长链接的映射。
+
+---
+
+### 代码实现
+
+```python
+import string
+import random
+from flask import Flask, request, jsonify
+
+# 初始化 Flask 应用
+app = Flask(__name__)
+
+# 初始化存储
+url_mapping = {}  # 用作短码与长URL的存储映射
+base_url = "http://short.ly/"
+short_code_length = 6
+
+# 工具函数：随机生成短码
+def generate_short_code(length=short_code_length):
+    """生成一个指定长度的随机短码"""
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choices(characters, k=length))
+
+
+# 用户接口：生成短链接
+@app.route('/shorten', methods=['POST'])
+def shorten_url():
+    """接收长URL，生成短URL"""
+    long_url = request.json.get('long_url')  # 从POST请求读入数据
+    if not long_url:
+        return jsonify({"error": "Missing 'long_url' parameter"}), 400
+    
+    # 检查长URL是否已经存在，直接返回短码
+    for short_code, url in url_mapping.items():
+        if long_url == url:
+            return jsonify({"short_url": base_url + short_code})
+    
+    # 如果不存在，生成新短码
+    short_code = generate_short_code()
+    
+    # 短码避免冲突
+    while short_code in url_mapping:
+        short_code = generate_short_code()
+    
+    # 保存映射关系
+    url_mapping[short_code] = long_url
+    short_url = base_url + short_code
+    return jsonify({"short_url": short_url})
+
+
+# 用户接口：还原长链接
+@app.route('/expand/<short_code>', methods=['GET'])
+def expand_url(short_code):
+    """根据短码还原长URL"""
+    long_url = url_mapping.get(short_code)
+    if not long_url:
+        return jsonify({"error": "Short URL not found"}), 404
+    
+    return jsonify({"long_url": long_url})
+
+
+# 启动服务器
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+---
+
+### 测试步骤
+1. 运行程序。
+2. 使用 Postman 或 cURL 测试以下功能：
+   - 生成短链接：
+     ```bash
+     curl -X POST -H "Content-Type: application/json" -d '{"long_url": "http://www.example.com"}' http://127.0.0.1:5000/shorten
+     ```
+   - 还原长链接：
+     假设短链接为 `http://short.ly/abc123`，此时查询短码 `abc123`：
+     ```bash
+     curl http://127.0.0.1:5000/expand/abc123
+     ```
+
+---
+
+### 优化与扩展
+1. **自定义短码**：
+   - 允许用户手动指定短码。
+2. **重复检测**：
+   - 对同一个长 URL，生成相同的短码映射。
+3. **数据库使用**：
+   - 将存储从 `url_mapping` 替换为 Redis 或其他数据库，支持分布式部署。
+4. **统计功能**：
+   - 添加短链接访问次数统计功能以追踪使用情况。
+5. **安全性**：
+   - 验证输入的 URL 格式，防止无效请求。
+
+
+## 4o-2408
 
 设计一个URL短链接系统可以使用Python和Flask框架，因为它简单易用，且有丰富的扩展库支持。下面概述一下系统的设计和实现：
 

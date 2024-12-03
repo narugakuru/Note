@@ -5,6 +5,13 @@ tags:
 date created: 2023-03-22
 date modified: 2024-11-22
 ---
+### OneDrive注册表
+
+```
+计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}
+
+System.IsPinnedToNameSpaceTree=0
+```
 
 ### 管理网络驱动器
 
