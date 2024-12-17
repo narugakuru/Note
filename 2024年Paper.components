@@ -1,0 +1,18 @@
+{
+  "components": [
+    {
+      "id": "78570207-020d-44ad-8b0e-f638a43c8497",
+      "type": "multi",
+      "titleAlign": "center",
+      "tabTitle": "",
+      "maxWidthRatio": -1,
+      "showBorder": true,
+      "showShadow": false,
+      "createAt": "2024-12-09T06:28:17.013Z",
+      "updateAt": "2024-12-09T06:28:17.013Z",
+      "components": [],
+      "layoutType": "column"
+    }
+  ],
+  "rootComponentId": "78570207-020d-44ad-8b0e-f638a43c8497"
+}

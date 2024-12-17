@@ -39,6 +39,8 @@ for($i = 0; $i -lt $dirList.Count; $i++)
 ### 复制环境
 
 ```
+conda create --name gpt python=3.10 -y
+
 conda create --name commontorch python=3.10 -y
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 pip install opencv sacred SimpleITK jupyter

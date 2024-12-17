@@ -27,3 +27,8 @@ Paper
 *.tar.zst
 *.tar.7z
 *.tar.zst
+
+
+
+# Ignore Smart Environment folder
+.smart-env

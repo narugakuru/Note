@@ -6,10 +6,13 @@ python -m nuitka --onefile --output-dir=app --mingw64 --lto=yes --enable-plugin=
 
 nuitka --plugin-list
 
+```shell
 python -m nuitka --mingw64 --lto=yes --standalone --enable-plugin=pyside6 --show-progress --output-dir=app --follow-imports --assume-yes-for-downloads --include-qt-plugins=sensible,qml,styles,sqldrivers --nofollow-import-to=scipy app.py
+```
 ### APPV1.0
+```shell
 python -m nuitka --output-dir=app --mingw64 --lto=yes --standalone --enable-plugin=pyside6 --show-progress --follow-imports --assume-yes-for-downloads --include-qt-plugins=sensible,qml,styles,sqldrivers --nofollow-import-to=scipy app.py
-
+```
 
 ```
 (side) PS E:\CodeAchieve\MyFluent> python -m nuitka --help
