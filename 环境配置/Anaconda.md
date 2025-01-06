@@ -3,8 +3,14 @@ title: Anaconda
 tags:
   - 
 date created: 2023-03-21
-date modified: 2024-11-29
+date modified: 2024-12-27
 ---
+
+# GPU性能对比
+
+![](Paper/2024年/attachments/Few-Shot%20Medical%20Image%20Segmentation%20via%20Generating%20Multiple%20Representative%20Descriptors-6.png)
+![](Paper/2024年/attachments/Few-Shot%20Medical%20Image%20Segmentation%20via%20Generating%20Multiple%20Representative%20Descriptors-8.png)
+
 [python多个虚拟环境需要共用一个包，怎么避免重复安装_pytorch是需要在不同的虚拟环境下重复安装嘛-CSDN博客](https://blog.csdn.net/Sallee001/article/details/127799088)
 
 # 共享软件包
@@ -77,6 +83,16 @@ zlib-1.2.13-h8cc25b3_1
 
 https://www.dropbox.com/scl/fi/yas70u9uzkeyzrmrfwcru/nabirds.tar.gz?e=1&n=13142758&oref=e&rlkey=vh0uduhckom5jyp73igjugqtr&submissionGuid=4c902ca4-854c-4057-a59c-a9144baa3e7c
 
+### shell
+
+```sh
+conda create --name net python=3.10 -y
+conda activate net
+conda install cudatoolkit==11.8
+pip install -r requirements.txt
+pip install torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
+```
+
 ### CATNet
 
 conda create --name CATNet python=3.10 -y
@@ -87,14 +103,14 @@ conda create --name CATNet python=3.10 -y
 torch安装
 
 conda create --name dsp python=3.8 -y
+conda install cudatoolkit==11.8
 
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 
 torch==2.0.1+cu118  
 torchvision==0.15.2+cu118
-cudatoolkit=11.8
 
-pip install torch==2.0.1 torchvision==0.15.2 cudatoolkit=11.8 --index-url https://download.pytorch.org/whl/cu118
+pip install torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
 
 ```
 
@@ -125,7 +141,7 @@ pip install mss
 
 2cFrWIS4y9EM
 
-### numpy
+### numpy版本问题
 
 ```
 find . -type f -name "*.py" -exec sed -i 's/np\.float/np.float64/g' {} +
