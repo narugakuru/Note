@@ -37,3 +37,16 @@ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v porta
 cd /usr/libexec/docker/
 sudo ln -s docker-runc-current docker-runc
 ```
+
+## emby
+
+```
+docker run -d \
+  --name emby \
+  --volume /mnt/sata2-1/video/:/media \
+  --volume /mnt/sda5/docker-config/emby/config:/config \
+  --net host \
+  --restart unless-stopped \
+  emby/embyserver
+
+```

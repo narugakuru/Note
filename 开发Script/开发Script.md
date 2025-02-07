@@ -7,4 +7,4 @@
 - [FluentDemo](开发Script/FluentDemo.md)
 - [LabelAnything实验](Paper/学习记录6-9月%20504408afbb7649d8ba4ded8efbfa998e/LabelAnything实验.md)
 - [Nuitka](开发Script/Nuitka.md)
-- [table_extrat](开发Script/table_extrat.md)
+- [测试脚本](开发Script/测试脚本.md)

@@ -1,8 +1,11 @@
 ---
+title: PVE
 tags:
   - PVE
   - 虚拟机
   - linux操作
+date created: 2023-04-30
+date modified: 2025-01-20
 ---
 [PVE官方手册](https://pve-doc-cn.readthedocs.io/zh-cn/latest)
 
@@ -18,6 +21,16 @@ tags:
 
 [pve安装docker好去处，再谈lxc安装docker，顺带安装docker中文管理界面_软件应用_什么值得买 (smzdm.com)](https://post.smzdm.com/p/a30km0k5/)
 
+# PVE断电故障
+
+![](服务器相关/attachments/PVE.png)
+![](服务器相关/attachments/PVE-1.png)
+ikuai
+![](服务器相关/attachments/PVE-2.png)
+openwrt
+![](服务器相关/attachments/PVE-3.png)
+
+
 # 13.12 Proxmox VE端口列表
 
 - Web界面：8006
@@ -28,6 +41,7 @@ tags:
 - corosync多播（集群通信使用）：5404, 5405 UDP
 
 # 网络类型
+
 net2
 ```shell
 root@iStoreOS:~# pystun3
@@ -51,8 +65,8 @@ Proxmox安装后默认没有通过SLAAC配置公网ipv6地址，使用debian/ubu
 `net.ipv6.conf.default.autoconf=1`
 `net.ipv6.conf.vmbr0.autoconf=1`
 
-
 # PVETools
+
 方式一：命令行安装
 
 > 需要用root账号来运行
@@ -69,11 +83,12 @@ chmod +x ./*.sh
 ./pvetools.sh
 ```
 
-
 # 网络拓扑
+
 ![Snipaste_2023-05-06_12-29-49.png](https://cdn.jsdelivr.net/gh/narugakuru/images/img/Snipaste_2023-05-06_12-29-49.png)
 
 # 删除硬盘
+
 [Proxmox VE(PVE) 解决无法删除无效设置一例 | Bug侠 (bugxia.com)](https://bugxia.com/2335.html)
 
 # 硬盘直通
@@ -85,8 +100,6 @@ chmod +x ./*.sh
 [玩转PVE:给黑群晖进行硬盘直通 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/540846901)
 
 [许迎果 第194期 给PVE平台的群晖NAS虚拟机直通硬盘 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/385048123)
-
-
 
 一、首先安装成功一个黑裙
 
@@ -105,6 +118,7 @@ qm set 101 -sata3 /dev/disk/by-id/ata-TOSHIBA_MQ04ABF100_Y94ETIZ4T
 ```
 
 # LXC硬盘直通
+
 本处的出发点是，[pve](https://so.csdn.net/so/search?q=pve&spm=1001.2101.3001.7020)中有一块磁盘已挂载用于网络共享，但其中的文件需要被docker某些程序访问。为了减少污染pve环境，就通过lxc安装docker，再把目录挂载到docker里面去。
 
 ```
@@ -132,6 +146,7 @@ mp1: /mnt/st2,mp=/home/jellyfin/media/st2
 ```
 
 # 强制关闭虚拟机
+
   在日常使用PVE搭建虚拟机的使用过程中，偶尔会出现虚拟机假死无法关闭的情况并提示TASK ERROR: VM quit/powerdown failed – got timeout显示关闭推出无反应超时，通过查找学习可以使用以下办法强制关闭假死的虚拟机。
 
       1、选中右侧pve，点击左上方shell，打开ssh控制台，通过ps命令查到对应虚拟机的VM进程号。
@@ -219,7 +234,7 @@ apt install -y pve-kernel-6.2.6-1-pve pve-headers-6.2.6-1-pve pve-firmware
 
 # 启用硬件直通
 
-1、打开PVE节点的shell，输入命令： 
+1、打开PVE节点的shell，输入命令：
 ```
 nano /etc/default/grub
 
@@ -254,7 +269,7 @@ lspci | grep -i ethernet
 
 编辑虚拟机配置
 
-vi /etc/pve/nodes/pve/qemu-server/101.conf 
+vi /etc/pve/nodes/pve/qemu-server/101.conf
 
 创建虚拟机
 
@@ -338,7 +353,6 @@ pveam download local debian-9-turnkey-tomcat_15.1-1_amd64.tar.gz
 pveam list local
 ```
 
-
 ## 1. 管理容器
 
 一般来说，管理linux[服务器](https://cloud.tencent.com/product/cvm?from=20065&from_column=20065)通过ssh登录操作，不过lxc可以直接从宿主机执行pct enter CTID进入LXC的shell:
@@ -361,43 +375,42 @@ LXC下面遇到的权限问题可以通过调整Cgroup来解决。
 
 hddtemp /dev/sd?和sensors命令可直接查看温度
 ![](https://www.right.com.cn/FORUM/data/attachment/forum/202206/26/231023nmzbvwxvx8bdb88x.jpg)
-显示CPU主频+核心频率、CPU温度、NVME硬盘温度、SATA硬盘温度，按压缩包路径替换即可。  
-  
-  
-如果有多个硬盘，自行修改页面高度。  
-编辑文件 /usr/share/pve-manager/js/pvemanagerlib.js，  
-跳转到 widget.pveNodeStatus 位置  
-height: 455,  
-红字部分改大即可。  
-  
-如果是全新安装或者首次更新并使用 PVE 7.2+，需要安装工具并重启 pveproxy 服务：  
-apt-get install -y lm-sensors && chmod +s /usr/sbin/smartctl && systemctl restart pveproxy  
-如果是更新脚本，只需要重启 pveproxy 服务：  
-systemctl restart pveproxy  
-  
-**还原方法：**  
-执行命令重新安装 proxmox-widget-toolkit 和 pve-manager  
-apt reinstall proxmox-widget-toolkit pve-manager  
-  
-N5105 调整CPU模式  
-之前7.2.1 N5105的CPU模式只支持performance powersave2种  
-更新到最新版本内核之后CPU模式支持conservative, ondemand, userspace, powersave, performance, schedutil  
-1. apt install cpufrequtils lm-sensors  
-  
-2. nano /etc/default/cpufrequtils  
-显示：  
-ENABLE="true"  
-GOVERNOR="ondemand"  
-MAX_SPEED="2000000"  
-MIN_SPEED="800000"  
-  
-红字部分默认的是performance，我这里改成了ondemand 大家可以根据自己的需要修改  
-平时以低速方式运行，当系统负载提高时候自动提高频率。以这种模式运行不会因为降频造成性能降低，同时也能节约电能和降低温度。  
-MAX_SPEED是上限，MIN_SPEED是下限，默认是1600000，我这里改成了800000  
-最后的效果是，CPU自动在0.8G和2G之间变频，CPU占用12%左右，频率保持在1G上下浮动  
-调整前最低是2G，CPU占用10%左右，经常酷睿到2.8G，调整CPU模式后，温度从原来43左右，降到了37左右  
-  
-3. systemctl restart cpufrequtils  
+显示CPU主频+核心频率、CPU温度、NVME硬盘温度、SATA硬盘温度，按压缩包路径替换即可。
+
+如果有多个硬盘，自行修改页面高度。
+编辑文件 /usr/share/pve-manager/js/pvemanagerlib.js，
+跳转到 widget.pveNodeStatus 位置
+height: 455,
+红字部分改大即可。
+
+如果是全新安装或者首次更新并使用 PVE 7.2+，需要安装工具并重启 pveproxy 服务：
+apt-get install -y lm-sensors && chmod +s /usr/sbin/smartctl && systemctl restart pveproxy
+如果是更新脚本，只需要重启 pveproxy 服务：
+systemctl restart pveproxy
+
+**还原方法：**
+执行命令重新安装 proxmox-widget-toolkit 和 pve-manager
+apt reinstall proxmox-widget-toolkit pve-manager
+
+N5105 调整CPU模式
+之前7.2.1 N5105的CPU模式只支持performance powersave2种
+更新到最新版本内核之后CPU模式支持conservative, ondemand, userspace, powersave, performance, schedutil
+1. apt install cpufrequtils lm-sensors
+
+2. nano /etc/default/cpufrequtils
+显示：
+ENABLE="true"
+GOVERNOR="ondemand"
+MAX_SPEED="2000000"
+MIN_SPEED="800000"
+
+红字部分默认的是performance，我这里改成了ondemand 大家可以根据自己的需要修改
+平时以低速方式运行，当系统负载提高时候自动提高频率。以这种模式运行不会因为降频造成性能降低，同时也能节约电能和降低温度。
+MAX_SPEED是上限，MIN_SPEED是下限，默认是1600000，我这里改成了800000
+最后的效果是，CPU自动在0.8G和2G之间变频，CPU占用12%左右，频率保持在1G上下浮动
+调整前最低是2G，CPU占用10%左右，经常酷睿到2.8G，调整CPU模式后，温度从原来43左右，降到了37左右
+
+3. systemctl restart cpufrequtils
 重启服务后生效。
 
 # Docker
